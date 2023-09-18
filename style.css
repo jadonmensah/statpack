@@ -1,0 +1,38 @@
+ul#menubar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul#menubar>li {
+    display: inline;
+}
+
+ul#tab-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul#tab-bar>li {
+    display: inline;
+}
+
+input[name="palette-input"] {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.bordered-cell {
+    border: 1px solid black;
+    height: 30px;
+    min-width: 60px;
+    overflow: hidden;
+}
+
+.listview {
+    table-layout: fixed;
+}

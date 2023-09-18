@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>statpack</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    
+    <div id="root">
+      <ul id="menubar">
+        <li><button id="file">File</button></li>
+        <li><button id="edit">Edit</button></li>
+        <li><button id="view">View</button></li>
+      </ul>
+      <ul id="tab-bar">
+          <li class="tab"><button id="default-tab"></button></li>
+          <li><button id="add-tab">+</button></li>
+      </ul>
+      <div id="current-listview" contenteditable></div>
+      <div id="palette">
+        <input name="palette-input" type="text" value=""/>
+        <div id="palette-suggestions"></div>
+      </div>
+      <div id="graphview"></div>
+      
+      <script src="index.js"></script>
+    </div>
+  </body>
+</html>
