@@ -35,4 +35,13 @@ input[name="palette-input"] {
 
 .listview {
     table-layout: fixed;
+    display:none;
+}
+
+.visible-listview {
+    display:block;
+}
+
+.current-tab>button {
+    background-color: green;
 }

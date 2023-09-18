@@ -23,6 +23,29 @@ let tab_bar = document.getElementById("tab-bar");
 
 function init_tabs(default_tab_name) {
     document.getElementById("default-tab").textContent = default_tab_name + " " + ++State.num_tabs;
+    
+    document.getElementById("default-tab").onclick = function () {
+        let tab = document.getElementById("listview-"+0);
+        for (let child of document.getElementById("current-listview").children) {
+            
+            child.classList.remove("visible-listview");
+   
+        }
+        
+        tab.classList.add("visible-listview");
+        for (let child of document.getElementById("tab-bar").children) {
+            child.classList.remove("current-tab");
+        }
+        document.getElementById("default-tab").parentElement.classList.add("current-tab");
+    }
+    document.getElementById("add-tab").onclick = function () {
+        add_tab(State.num_tabs++, default_tab_name);
+        for (let child of document.getElementById("current-listview").children) {
+            child.classList.remove("visible-listview");
+        }
+        document.getElementById("listview-"+(State.num_tabs-1)).classList.add("visible-listview");
+        State.num_lists_for_tab[State.num_tabs-1] = StatpackSettings.default_num_lists;
+    }
 }
 
 function add_list(tab_id, num_lists, default_list_length, default_list_name) {
@@ -54,6 +77,7 @@ function init_listview(listview, default_num_lists, default_list_length, default
     const table = document.createElement("table");
     table.id = "listview-" + tab_id;
     table.classList.add("listview");
+    table.classList.add("visible-listview");
     table.contentEditable = "true";
 
     // Generate table headings
@@ -143,8 +167,67 @@ function init_palette() {
     palette_input.oninput = function () {suggest(palette_input.value);}
 }
 
-function get_list(id) {
-    // Implement me :)
+function get_list(list_num, tab_id) {
+    let list = []
+    let table = document.getElementById("listview-"+tab_id);
+    if (table === null) {
+        return null;
+    }
+    if (list_num < 0) {
+        return null;
+    }
+
+    let skipped_heading = false;
+    for (let row of table.rows) {
+        if (!skipped_heading) {skipped_heading = true; continue;}
+        if (row.cells.length > list_num) {
+            
+            list.push(parseFloat(row.children[list_num].textContent));
+        } else {
+            return null;
+        }
+    }
+    return list;
+}
+
+function add_tab(tab_id, default_tab_name) {
+    // add new listview table with id listview-{tab_id)
+    init_listview(current_listview,
+                  StatpackSettings.default_num_lists,
+                  StatpackSettings.default_list_length,
+                  StatpackSettings.default_list_name,
+                  tab_id);
+    // add button to switch tabs
+    let tab_bar = document.getElementById("tab-bar");
+    let tab_bar_li = document.createElement("li");
+    tab_bar_li.classList.add("tab");
+    let tab_btn = document.createElement("button");
+    tab_btn.id = "tab-" + tab_id;
+    tab_btn.textContent = default_tab_name + " " + (tab_id+1);
+    tab_bar_li.appendChild(tab_btn);
+    tab_bar.appendChild(tab_bar_li);
+    let add_btn_li = document.getElementById("add-tab-li");
+    tab_bar.insertBefore(tab_bar_li, add_btn_li);
+      // button onclick -> add current-tab to listview table classList, remove from other listviews
+    tab_btn.onclick = function () {
+        let tab = document.getElementById("listview-"+tab_id);
+        for (let child of document.getElementById("current-listview").children) {
+            
+            child.classList.remove("visible-listview");
+   
+        }
+	// highlight self, unhighlight every other tab button
+        
+        
+        for (let child of document.getElementById("tab-bar").children) {
+            child.classList.remove("current-tab");
+        }
+        tab_bar_li.classList.add("current-tab");
+        
+        tab.classList.add("visible-listview");
+
+    }
+    // click button to switch to tab
 }
 
 init_tabs(StatpackSettings.default_tab_name);
