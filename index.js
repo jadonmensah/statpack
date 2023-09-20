@@ -66,6 +66,7 @@ function add_list(tab_id, num_lists, default_list_length, default_list_name) {
 	    
 	    let cell = document.createElement("td");
 	    cell.classList.add("bordered-cell");
+            cell.contentEditable = "true";
 	    row.appendChild(cell);
 	}
     }
@@ -78,7 +79,7 @@ function init_listview(listview, default_num_lists, default_list_length, default
     table.id = "listview-" + tab_id;
     table.classList.add("listview");
     table.classList.add("visible-listview");
-    table.contentEditable = "true";
+    //table.contentEditable = "true";
 
     // Generate table headings
     let thead = table.createTHead();
@@ -117,7 +118,8 @@ function init_listview(listview, default_num_lists, default_list_length, default
 	row.id = "row-" + j + "-listview-" + tab_id;
 	for (let k = 0; k < default_num_lists; k++) {
 	    let cell = document.createElement("td");
-	    cell.classList.add("bordered-cell")
+	    cell.classList.add("bordered-cell");
+            cell.contentEditable = "true";
 	    row.appendChild(cell);
 	    
 	}
