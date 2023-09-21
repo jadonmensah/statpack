@@ -1,8 +1,8 @@
 :root {
---text-colour-normal: #D5D5D5;
+--text-colour-normal: #151515;
 --text-colour-low-emphasis: #6C6C6C;
 --text-colour-high-emphasis: #E2E2E2;
---text-colour-max-emphasis: #FFFFFF;
+--text-colour-max-emphasis: #000000;
 
 --accent-colour-normal: #26619C;
 --accent-colour-low-emphasis: #6B93BB;
@@ -11,8 +11,9 @@
 --outline-colour-low-emphasis: #9EB9D4;
 --outline-colour-high-emphasis: #99FFFF;
 
---background-colour-base: #121212;
---background-colour-elevated: #464646;
+--background-colour-base: #FFFFFF;
+--background-colour-low-elevation: #CCCCCC;
+--background-colour-elevated: #999999;
 
 }
 
@@ -39,43 +40,53 @@ body {
     padding: 0;
     color: var(--text-colour-normal);
     font-family: helvetica;
-    
+    font-size: 1.5em;
 }
 
 button {
     all: unset;
-    border-radius: .2rem;
-    padding: .2rem;
+    margin:0;
+    border-radius: 0;
+    padding: .4rem;
     outline: none;
     background: var(--background-colour-elevated);
     font-family: helvetica 300;
+    
 }
 
 button:hover {
     color: var(--text-colour-max-emphasis);
+font-family: helvetica;
+font-weight: bold;
+}
+
+table {
+    border-spacing: .8rem;
 }
 
 th {
     background: var(--background-colour-elevated);
     
     height: 1lh;
-    min-width: 60px;
-    max-width: 60px;
+    min-width: 120px;
+    max-width: 120px;
     white-space: nowrap;
-    
+    border-radius: .2rem;
     overflow:hidden;
     text-overflow: ellipsis;
+    
 }
 
 
 td {
 
     text-align: right;
-    background: var(--background-colour-elevated);
-    
+    background: var(--background-colour-low-elevation);;
+    border-radius: .2rem;
     height: 1lh;
-    max-width: 60px;
-    
+    max-width: 120px;
+    padding:.2rem;
+    font-weight:300;
     overflow:hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -83,6 +94,7 @@ td {
 
 td:hover {
     color: var(--text-colour-max-emphasis);
+    outline: 2px solid var(--accent-colour-normal);
 }
 
 ul#menubar {
@@ -90,8 +102,8 @@ ul#menubar {
     list-style-type: none;
     margin-top: 0;
     margin-bottom: 1rem;
-    padding: .2rem;
-    border-bottom: .1rem solid var(--outline-colour-low-emphasis);
+    padding: .4rem;
+    border-bottom: .2rem solid var(--outline-colour-low-emphasis);
     
 }
 
@@ -99,21 +111,35 @@ ul#menubar>li {
     display: inline;
 }
 
+#add-tab {
+    margin-left: 1rem;
+}
+
 ul#tab-bar {
+    display: flex;
     list-style-type: none;
     background-color: var(--background-colour-elevated);
-    margin:0;
+    margin-left: .8rem;
+    margin-right: .8rem;
     padding:0;
+    border-radius: .4rem;
+border-bottom: .2rem solid var(--outline-colour-low-emphasis);    
 }
 
 ul#tab-bar>button {
-    width: 60px;
+    width: 120px;
     background-color: var(--background-colour-elevated);
+    border-radius: 0;
+}
+
+#default-tab {
+    border-radius: .4rem 0px 0px .4rem;
 }
 
 .current-tab>button {
     background-color: var(--accent-colour-normal) ;
-    border-radius:0;
+    
+
 }
 
 ul#tab-bar>li {
@@ -126,10 +152,12 @@ ul#tab-bar>li {
 
 #current-listview>table>thead>tr>th{
     background: var(--background-colour-base);
+
 }
 
 #current-listview>table>thead>tr>th>button{
     background: var(--background-colour-base);
+
 }
 
 input[name="palette-input"] {
@@ -137,7 +165,7 @@ input[name="palette-input"] {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100%;
+    
 }
 
 .listview {
@@ -149,3 +177,21 @@ input[name="palette-input"] {
     display:block;
 }
 
+[name="palette-input"] {
+    all: unset;
+    background: var(--background-colour-low-elevation);
+    margin: 1rem;
+    padding: .4rem;
+    font-size: 1rem;
+    font-family: helvetica;
+    font-weight: 300;
+    border-radius: .2rem;
+}
+
+#palette-suggestions {
+    padding: .8rem;
+}
+
+::placeholder {
+    color: var(--text-colour-low-emphasis);
+}

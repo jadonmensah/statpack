@@ -45,6 +45,10 @@ function init_tabs(default_tab_name) {
         }
         document.getElementById("listview-"+(State.num_tabs-1)).classList.add("visible-listview");
         State.num_lists_for_tab[State.num_tabs-1] = StatpackSettings.default_num_lists;
+        for (let child of document.getElementById("tab-bar").children) {
+            child.classList.remove("current-tab");
+        }
+        document.getElementById("tab-"+(State.num_tabs-1)).parentElement.classList.add("current-tab");
     }
 }
 
@@ -159,6 +163,10 @@ function suggest(input) {
     draw_command_suggestions(suggestions);
 }
 
+function clear_suggest(input) {
+   document.getElementById("palette-suggestions").replaceChildren();
+}
+
 function init_palette() {
     let palette_input = document.getElementsByName("palette-input");
     if (palette_input.length !== 1) {
@@ -167,6 +175,14 @@ function init_palette() {
     palette_input = palette_input[0];
     
     palette_input.oninput = function () {suggest(palette_input.value);}
+    palette_input.addEventListener("keydown", (evt) => {
+	if (evt.code === "Enter") {
+            evt.preventDefault();
+            //exec_command(palette_input.value);
+            palette_input.value = "";
+            clear_suggest();
+	}
+    });
 }
 
 function get_list(list_num, tab_id) {
