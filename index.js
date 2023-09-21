@@ -1,7 +1,7 @@
 console.log(`welcome to statpack v0.0.0
 want to help develop & maintain statpack? visit TODO https://github.com/jadonmensah/statpack
 `);
-console.log("tested with mozilla firefox & google chrome on windows 11")
+console.log("tested with mozilla firefox & google chrome on windows 11");
 
 const StatpackSettings = {
     DEBUG_random_counter: 0,
@@ -71,6 +71,18 @@ function add_list(tab_id, num_lists, default_list_length, default_list_name) {
 	    let cell = document.createElement("td");
 	    cell.classList.add("bordered-cell");
             cell.contentEditable = "true";
+	    cell.onblur = function (evt) {evt.target.scrollLeft = 0;}
+	    cell.onwheel = e => {
+		
+		e.preventDefault();
+		const container = e.target.parentElement.parentElement;
+		const containerScrollPosition = e.target.scrollLeft;
+		container.scrollTo({
+		    top: 0,
+		    left: containerScrollPosition + e.deltaY,
+		    behaviour: "smooth"
+		});
+	    };
 	    row.appendChild(cell);
 	}
     }
@@ -84,6 +96,19 @@ function init_listview(listview, default_num_lists, default_list_length, default
     table.classList.add("listview");
     table.classList.add("visible-listview");
     //table.contentEditable = "true";
+    table.onwheel = e => {
+	
+	e.preventDefault();
+	const container = e.target;
+	const containerScrollPosition = e.target.scrollLeft;
+	container.scrollTo({
+	    top: 0,
+	    left: containerScrollPosition + e.deltaY,
+	    behaviour: "smooth"
+	});
+    };
+
+
 
     // Generate table headings
     let thead = table.createTHead();
@@ -102,6 +127,7 @@ function init_listview(listview, default_num_lists, default_list_length, default
 	    let plusbtn_th = document.createElement("th");
 	    let plusbtn = document.createElement("button");
 	    plusbtn.textContent = "+";
+	    plusbtn.title="Add a new list to the current sheet"
 	    plusbtn.id = "add-column-" + tab_id;
 	    plusbtn.contentEditable = "false";
 	    plusbtn.onclick = function () {  add_list(tab_id,
@@ -124,6 +150,19 @@ function init_listview(listview, default_num_lists, default_list_length, default
 	    let cell = document.createElement("td");
 	    cell.classList.add("bordered-cell");
             cell.contentEditable = "true";
+	    
+	    cell.onblur = function (evt) {evt.target.scrollLeft = 0;}
+	    cell.onwheel = e => {
+		
+		e.preventDefault();
+		const container = e.target.parentElement.parentElement;
+		const containerScrollPosition = e.target.scrollLeft;
+		container.scrollTo({
+		    top: 0,
+		    left: containerScrollPosition + e.deltaY,
+		    behaviour: "smooth"
+		});
+	    };
 	    row.appendChild(cell);
 	    
 	}
@@ -255,3 +294,4 @@ init_listview(current_listview,
 	      StatpackSettings.default_list_name,
 	      0);
 init_palette();
+

@@ -4,8 +4,7 @@
 --text-colour-high-emphasis: #E2E2E2;
 --text-colour-max-emphasis: #000000;
 
---accent-colour-normal: #26619C;
---accent-colour-low-emphasis: #6B93BB;
+--accent-colour-normal: #6B93BB;
 
 --outline-colour-normal: #A4DDED;
 --outline-colour-low-emphasis: #9EB9D4;
@@ -50,7 +49,8 @@ button {
     padding: .4rem;
     outline: none;
     background: var(--background-colour-elevated);
-    font-family: helvetica 300;
+    font-family: helvetica;
+    cursor:pointer;
     
 }
 
@@ -60,7 +60,13 @@ font-family: helvetica;
 font-weight: bold;
 }
 
+/* accessibility */
+button:focus {
+    outline: revert;
+}
+
 table {
+    overflow-x:auto;
     border-spacing: .8rem;
 }
 
@@ -68,28 +74,45 @@ th {
     background: var(--background-colour-elevated);
     
     height: 1lh;
-    min-width: 120px;
-    max-width: 120px;
+    min-width: 8rem;
+    max-width: 8rem;
     white-space: nowrap;
     border-radius: .2rem;
     overflow:hidden;
     text-overflow: ellipsis;
     
+   
+    
 }
 
 
-td {
 
-    text-align: right;
+th.bordered-cell {
+    border-bottom: .2rem solid var(--outline-colour-low-emphasis);
+    
+}
+
+
+/*Fixes so chrome does ellipsis overflow like a normal browser*/
+/* see cell.onblur in index.js*/
+
+td:focus {
+    text-overflow:clip;
+}
+
+td {
     background: var(--background-colour-low-elevation);;
     border-radius: .2rem;
-    height: 1lh;
-    max-width: 120px;
+    height: 2rem;
+    min-width: 8rem;
+    max-width: 8rem;
     padding:.2rem;
-    font-weight:300;
+    
     overflow:hidden;
-    text-overflow: ellipsis;
+    
     white-space: nowrap;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3) inset;
+    text-overflow:ellipsis;
 }
 
 td:hover {
@@ -98,6 +121,7 @@ td:hover {
 }
 
 ul#menubar {
+    
     background-color: var(--background-colour-elevated);
     list-style-type: none;
     margin-top: 0;
@@ -112,11 +136,17 @@ ul#menubar>li {
 }
 
 #add-tab {
-    margin-left: 1rem;
+    //margin-left: 1rem;
+    width: 4rem;
+    
 }
 
+
 ul#tab-bar {
+    
+    overflow-x: auto;
     display: flex;
+    align-items: start;
     list-style-type: none;
     background-color: var(--background-colour-elevated);
     margin-left: .8rem;
@@ -126,10 +156,10 @@ ul#tab-bar {
 border-bottom: .2rem solid var(--outline-colour-low-emphasis);    
 }
 
-ul#tab-bar>button {
-    width: 120px;
-    background-color: var(--background-colour-elevated);
-    border-radius: 0;
+ul#tab-bar>li>button {
+    width: 8rem;
+    text-align: center;
+    //border-radius: 0;
 }
 
 #default-tab {
@@ -160,11 +190,13 @@ ul#tab-bar>li {
 
 }
 
-input[name="palette-input"] {
+#palette {
+    width:32rem;
+    margin:0;
+    padding:0;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    right:0;
     
 }
 
@@ -177,19 +209,34 @@ input[name="palette-input"] {
     display:block;
 }
 
-[name="palette-input"] {
+form {
+    width: 100%;
+}
+
+input[name="palette-input"] {
+    
     all: unset;
     background: var(--background-colour-low-elevation);
     margin: 1rem;
+    margin-top:0;
     padding: .4rem;
     font-size: 1rem;
     font-family: helvetica;
-    font-weight: 300;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3) inset;
     border-radius: .2rem;
+    // border-bottom: .2rem solid var(--outline-colour-low-emphasis);
+    width:29rem;
 }
 
 #palette-suggestions {
-    padding: .8rem;
+    border-bottom: .2rem solid var(--outline-colour-low-emphasis);
+    margin: 1rem;
+    border-radius: .2rem;
+    font-size: 1rem;
+    padding: .4rem;
+    background: var(--background-colour-elevated);
+    width:29rem;
+    
 }
 
 ::placeholder {

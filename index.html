@@ -17,12 +17,16 @@
       </ul>
       <ul id="tab-bar">
           <li class="tab current-tab"><button id="default-tab"></button></li>
-          <li id="add-tab-li"><button id="add-tab" >+</button></li>
+          <li id="add-tab-li"><button title="Add a new sheet" id="add-tab" >+</button></li>
       </ul>
       <div id="current-listview" ></div>
       <div id="palette">
-        <input name="palette-input" type="text" placeholder="Enter a command..." value=""/>
-        <div id="palette-suggestions"></div>
+	<div id="palette-suggestions"></div>
+        <form action="">
+	  <input name="palette-input" type="text" placeholder="Enter a command..." value=""/>
+        </form>
+        
+        
       </div>
       <div id="graphview"></div>
       
