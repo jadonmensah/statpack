@@ -12,6 +12,29 @@ const StatpackSettings = {
     suggestions_max_length: 5,
 };
 
+const StatpackCommands = {
+    "add": cmd_add,
+    "add_desc": "Add two lists together",
+    "log": cmd_log,
+    "log_desc": "Apply a log function to every element in a list",
+    "linear": cmd_linear,
+    "linear_desc": "Apply a linear transformation to every element in a list",
+    "calcpmcc": cmd_calcpmcc,
+    "calcpmcc_desc": "Calculate the product-moment correlation coefficient of two lists",
+    "testpmcc": cmd_testpmcc,
+    "testpmcc_desc": "Test the significance of a PMCC",
+    "normal": cmd_normaldist,
+    "normal_desc": "TODO add normal_desc",
+    "poisson": cmd_poissondist,
+    "poisson_desc": "TODO add poisson_desc",
+    "binomial": cmd_binomialdist,
+    "binomial_desc": "TODO add binomial_desc",
+    "geometric": cmd_geodist,
+    "geometric_desc": "TODO add geometric_desc",
+    "chisquared": cmd_x2dist,
+    "chisquared_desc": "TODO add chisquared_desc"
+}
+
 let State = {
     // State variables that need to be accessed easily
     num_tabs: 0,
@@ -20,6 +43,10 @@ let State = {
 
 let current_listview = document.getElementById("current-listview");
 let tab_bar = document.getElementById("tab-bar");
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function init_tabs(default_tab_name) {
     document.getElementById("default-tab").textContent = default_tab_name + " " + ++State.num_tabs;
@@ -197,8 +224,59 @@ function draw_command_suggestions(suggestions) {
     }
 }
 
+
+function strdist(a,b) {
+    // truncated hamming distance
+    if (a.length > b.length) {
+        a = a.slice(0, b.length);
+    }
+    if (a.length < b.length) {
+        b = b.slice(0, a.length);
+    }
+    let count = 0;
+    for (let n = 0; n < a.length; n++) {
+        if (a[n] != b[n]) {
+            count = count + 1;
+            console.log(a + " " + b);
+        }
+    }
+    return count;
+    
+}
+
+function sort_by_strdist(singleWord, words) {
+    let wordDistances = words.map(word => ({
+        word: word,
+        distance: strdist(word, singleWord)
+    }));
+
+    // Sort the array by distance
+    wordDistances.sort((a, b) => a.distance - b.distance);
+
+    // Return the sorted list of words
+    return wordDistances.map(wd => wd.word);    
+}
+
+function gen_suggest_obj(cmd) {
+    return {
+        name: cmd,
+        desc: StatpackCommands[cmd+"_desc"],
+    }; 
+}
+
 function suggest(input) {
-    let suggestions = [{name: ("FakeCommand" + StatpackSettings.DEBUG_random_counter++), desc: "This is a fake command for testing purposes."}];
+    function clear_suggest(input) {
+        document.getElementById("palette-suggestions").replaceChildren();
+    }
+    let tokens = input.trim().split(/\s+/);
+    // create copy of StatpackCommands keys
+    // filter elements ending in _desc
+    var keys = Object.keys(StatpackCommands).filter(key => !(key.endsWith("_desc")));
+    // sort based on levenshtein distance between user input and StatpackCommands keys
+    
+    
+    let suggestions = sort_by_strdist(tokens[0], keys).reverse().slice(-3).map(gen_suggest_obj);
+    //let suggestions = [{name: ("FakeCommand" + StatpackSettings.DEBUG_random_counter++), desc: "This is a fake command for testing purposes."}];
     draw_command_suggestions(suggestions);
 }
 
@@ -217,11 +295,27 @@ function init_palette() {
     palette_input.addEventListener("keydown", (evt) => {
 	if (evt.code === "Enter") {
             evt.preventDefault();
-            //exec_command(palette_input.value);
+            exec_command(palette_input.value);
             palette_input.value = "";
             clear_suggest();
 	}
     });
+}
+
+async function exec_command(cmd) {
+    // Split on whitespace
+    let tokens = cmd.trim().split(/\s+/);
+    if (tokens[0] in StatpackCommands) {
+        StatpackCommands[tokens[0]](tokens.slice(1));
+    } else {
+        // add err to palette input
+        let palette_input = document.getElementsByName("palette-input")[0];
+        palette_input.classList.add("error");
+        // sleep 500ms
+        await sleep(500);
+        // remove err from palette input
+        palette_input.classList.remove("error");
+    }
 }
 
 function get_list(list_num, tab_id) {
@@ -287,6 +381,31 @@ function add_tab(tab_id, default_tab_name) {
     // click button to switch to tab
 }
 
+function write_list(list, list_num, tab_id) {
+    // Note: trying to write to a cell that doesn't exist fails silently 
+    let table = document.getElementById("listview-"+tab_id);
+    let skipped_heading = false;
+    let counter = 0;
+    for (let row of table.rows) {
+        if (!skipped_heading) {skipped_heading = true; continue;}
+
+        if (row.cells.length > list_num) {
+            row.children[list_num].textContent = list[counter++]
+        }
+    }
+}
+
+function cmd_add() {}
+function cmd_log() {}
+function cmd_linear() {}
+function cmd_calcpmcc() {}
+function cmd_testpmcc() {}
+function cmd_normaldist() {}
+function cmd_poissondist() {}
+function cmd_binomialdist() {}
+function cmd_geodist() {}
+function cmd_x2dist() {}
+
 init_tabs(StatpackSettings.default_tab_name);
 init_listview(current_listview,
 	      StatpackSettings.default_num_lists,
@@ -294,4 +413,6 @@ init_listview(current_listview,
 	      StatpackSettings.default_list_name,
 	      0);
 init_palette();
+write_list([5245240],1,0);
+
 

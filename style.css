@@ -5,6 +5,7 @@
 --text-colour-max-emphasis: #000000;
 
 --accent-colour-normal: #6B93BB;
+--accent-colour-error: #B31B1B;
 
 --outline-colour-normal: #A4DDED;
 --outline-colour-low-emphasis: #9EB9D4;
@@ -52,6 +53,10 @@ button {
     font-family: helvetica;
     cursor:pointer;
     
+}
+
+.error {
+    outline: 2px solid var(--accent-colour-error) !important;
 }
 
 button:hover {
