@@ -237,7 +237,7 @@ function strdist(a,b) {
     for (let n = 0; n < a.length; n++) {
         if (a[n] != b[n]) {
             count = count + 1;
-            console.log(a + " " + b);
+            
         }
     }
     return count;
@@ -306,7 +306,7 @@ async function exec_command(cmd) {
     // Split on whitespace
     let tokens = cmd.trim().split(/\s+/);
     if (tokens[0] in StatpackCommands) {
-        StatpackCommands[tokens[0]](tokens.slice(1));
+        StatpackCommands[tokens[0]]();
     } else {
         // add err to palette input
         let palette_input = document.getElementsByName("palette-input")[0];
@@ -322,9 +322,11 @@ function get_list(list_num, tab_id) {
     let list = []
     let table = document.getElementById("listview-"+tab_id);
     if (table === null) {
+        console.log("tablenull");
         return null;
     }
     if (list_num < 0) {
+        console.log("less than zero");
         return null;
     }
 
@@ -335,6 +337,7 @@ function get_list(list_num, tab_id) {
             
             list.push(parseFloat(row.children[list_num].textContent));
         } else {
+            console.log("getting nonexistent list");
             return null;
         }
     }
@@ -382,7 +385,8 @@ function add_tab(tab_id, default_tab_name) {
 }
 
 function write_list(list, list_num, tab_id) {
-    // Note: trying to write to a cell that doesn't exist fails silently 
+    // Note: trying to write to a cell that doesn't exist fails silently
+    // Todo: make it so it auto-creates lists that dont exist (tabs+rows NOT auto created)
     let table = document.getElementById("listview-"+tab_id);
     let skipped_heading = false;
     let counter = 0;
@@ -391,11 +395,56 @@ function write_list(list, list_num, tab_id) {
 
         if (row.cells.length > list_num) {
             row.children[list_num].textContent = list[counter++]
+        } else {
+            while (row.cells.length < list_num) {
+                add_list(tab_id, 
+                         State.num_lists_for_tab[tab_id], 
+                         StatpackSettings.default_list_length, 
+                         StatpackSettings.default_list_name);
+                State.num_lists_for_tab[tab_id] += 1;
+            }
+            row.children[list_num].textContent = list[counter++]       
         }
     }
 }
 
-function cmd_add() {}
+function gray_overlay(on) {
+    let overlay = document.getElementById("overlay");
+    if (on) {
+        overlay.classList.add("overlay-on");
+    } else {
+        overlay.classList.remove("overlay-on");
+    }
+}
+
+function cmd_add() {
+    gray_overlay(true);
+    let menu = document.getElementById("add-menu");
+    menu.style.display = "block";    
+}
+
+function cmd_add_submit() {
+    let l1_id_input = document.getElementById("add-menu-l1-id");
+    l1_id = parseInt(l1_id_input.value) - 1;
+    let l2_id_input = document.getElementById("add-menu-l2-id");
+    l2_id = parseInt(l2_id_input.value) - 1;
+    let out_list_id_input = document.getElementById("add-menu-out-list-id");
+    out_list_id = parseInt(out_list_id_input.value) - 1;
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split().pop());
+
+    let l1 = get_list(l1_id, tab_id);
+    console.log(l1);
+    let l2 = get_list(l2_id, tab_id);
+    console.log(l2);
+    let l3 = []
+    write_list(l3, out_list_d, tab_id);
+    cmd_add_close();    
+}
+function cmd_add_close() {
+    let menu = document.getElementById("add-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
 function cmd_log() {}
 function cmd_linear() {}
 function cmd_calcpmcc() {}
