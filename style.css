@@ -1,19 +1,67 @@
 :root {
---text-colour-normal: #151515;
---text-colour-low-emphasis: #6C6C6C;
---text-colour-high-emphasis: #E2E2E2;
---text-colour-max-emphasis: #000000;
+    --text-colour-normal: #151515;
+    --text-colour-low-emphasis: #6C6C6C;
+    --text-colour-high-emphasis: #E2E2E2;
+    --text-colour-inverse: #FAFAFA;
+    --text-colour-max-emphasis: #000000;
+    --accent-colour-normal: #6B93BB;
+    --accent-colour-error: #B31B1B;
+    --outline-colour-normal: #A4DDED;
+    --outline-colour-low-emphasis: #9EB9D4;
+    --outline-colour-high-emphasis: #99FFFF;
+    --background-colour-base: #FFFFFF;
+    --background-colour-low-elevation: #CCCCCC;
+    --background-colour-high-elevation: #363636;
+    --background-colour-elevated: #999999;
+}
 
---accent-colour-normal: #6B93BB;
---accent-colour-error: #B31B1B;
+#add-menu-form {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+    z-index: 3;
+    background: var(--background-colour-elevated);
+    border-radius: .4rem;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    outline: 2px solid var(--text-colour-normal);
+}
 
---outline-colour-normal: #A4DDED;
---outline-colour-low-emphasis: #9EB9D4;
---outline-colour-high-emphasis: #99FFFF;
+.menu-input-container {
+    margin: 2rem;
+    background: var(--background-colour-high-elevation);
+    border-radius: .2rem;
+    color: var(--text-colour-inverse);
+    line-height: .5rem;
+}
 
---background-colour-base: #FFFFFF;
---background-colour-low-elevation: #CCCCCC;
---background-colour-elevated: #999999;
+.menu-input-container>p {
+    padding-top: 1rem;
+    margin: 1rem;
+}
+
+
+.menu-input-container > input {
+    color: var(--text-colour-normal ) !important;  
+    all:unset;
+    background: var(--background-colour-low-elevation);
+    margin: 1rem;
+    margin-top: 0;
+    padding: .4rem;
+    font-size: 1rem;
+    font-family: helvetica;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3) inset;
+    border-radius: .2rem;
+}
+
+.menu-input-container > .submit {
+    
+    top: 0;
+    left:0;
 
 }
 
@@ -26,7 +74,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    background-color: rgba(0,0,0,0.25); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     // cursor: pointer; /* Add a pointer on hover */
     pointer-events: none; 
