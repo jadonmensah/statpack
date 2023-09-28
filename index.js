@@ -1,7 +1,6 @@
 console.log(`welcome to statpack v0.0.0
-want to help develop & maintain statpack? visit TODO https://github.com/jadonmensah/statpack
+want to help develop & maintain statpack? visit https://github.com/jadonmensah/statpack
 `);
-console.log("tested with mozilla firefox & google chrome on windows 11");
 
 const StatpackSettings = {
     DEBUG_random_counter: 0,
@@ -286,9 +285,6 @@ function clear_suggest(input) {
 
 function init_palette() {
     let palette_input = document.getElementsByName("palette-input");
-    if (palette_input.length !== 1) {
-	console.log("more than 1 palette-input (or none at all) - something's up")
-    }
     palette_input = palette_input[0];
     
     palette_input.oninput = function () {suggest(palette_input.value);}
@@ -396,12 +392,9 @@ function write_list(list, list_num, tab_id) {
         if (row.cells.length > list_num) {
             row.children[list_num].textContent = list[counter++]
         } else {
-            while (row.cells.length < list_num) {
-                add_list(tab_id, 
-                         State.num_lists_for_tab[tab_id], 
-                         StatpackSettings.default_list_length, 
-                         StatpackSettings.default_list_name);
-                State.num_lists_for_tab[tab_id] += 1;
+            
+            while(row.cells.length < (list_num+1)) {
+                document.getElementById("add-column-"+tab_id).click();
             }
             row.children[list_num].textContent = list[counter++]       
         }
@@ -430,14 +423,17 @@ function cmd_add_submit() {
     l2_id = parseInt(l2_id_input.value) - 1;
     let out_list_id_input = document.getElementById("add-menu-out-list-id");
     out_list_id = parseInt(out_list_id_input.value) - 1;
-    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split().pop());
-
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
+    
     let l1 = get_list(l1_id, tab_id);
-    console.log(l1);
+    l1 = l1.map((a) => a = a || 0);
+   
     let l2 = get_list(l2_id, tab_id);
-    console.log(l2);
-    let l3 = []
-    write_list(l3, out_list_d, tab_id);
+    l2 = l2.map((a) => a = a || 0);
+    
+    let l3 = l1.map((v, i) => v + l2[i]);
+    
+    write_list(l3, out_list_id, tab_id);
     cmd_add_close();    
 }
 function cmd_add_close() {
