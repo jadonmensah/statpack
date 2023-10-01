@@ -1,4 +1,3 @@
-
 console.log(`welcome to statpack v0.0.0
 want to help develop & maintain statpack? visit https://github.com/jadonmensah/statpack
 `);
@@ -10,6 +9,7 @@ const StatpackSettings = {
     default_tab_name: "Sheet",
     default_list_name: "List",
     suggestions_max_length: 5,
+    decimal_places: 3,
 };
 
 const StatpackCommands = {
@@ -216,6 +216,7 @@ function init_listview(listview, default_num_lists, default_list_length, default
 function draw_command_suggestions(suggestions) {
     let suggestions_div = document.getElementById("palette-suggestions");
     suggestions_div.replaceChildren();
+    suggestions_div.style.display = "block";
     for (let i = 0; i < suggestions.length; i++ ) {
 	// add p with strong.command-name for command name and then description
 	let suggestion = document.createElement("p");
@@ -302,6 +303,7 @@ function init_palette() {
             evt.preventDefault();
             exec_command(palette_input.value);
             palette_input.value = "";
+            document.getElementById("palette-suggestions").style.display = "none";
             clear_suggest();
 	}
     });
@@ -434,9 +436,16 @@ async function cmd_menu_error(menu, msg) {
     menu.classList.remove("error");
 }
 
-function cmd_menu_remove_error(menu) {
+function cmd_menu_output(menu, msg) {
+		output_msg = document.createElement("span");
+		output_msg.className = "output-msg";
+		output_msg.textContent = msg;
+		menu.appendChild(output_msg);
+}
+
+function cmd_menu_remove_msg(menu) {
     for (let element of menu.children) {
-        if (element.classList.contains("error-msg")) element.remove();
+        if (element.classList.contains("error-msg") || element.classList.contains("output-msg")) element.remove();
     }
 }
 
@@ -448,7 +457,7 @@ function cmd_add() {
 
 function cmd_add_submit() {
     let add_menu = document.getElementById("add-menu-form");
-    cmd_menu_remove_error(add_menu);
+    cmd_menu_remove_msg(add_menu);
     
     let l1_id_input = document.getElementById("add-menu-l1-id");
     l1_id = parseInt(l1_id_input.value) - 1;
@@ -506,7 +515,7 @@ function cmd_log() {
 
 function cmd_log_submit() {
     let log_menu = document.getElementById("log-menu-form");
-    cmd_menu_remove_error(log_menu);
+    cmd_menu_remove_msg(log_menu);
     
     let l1_id_input = document.getElementById("log-menu-l1-id");
     l1_id = parseInt(l1_id_input.value) - 1;
@@ -560,7 +569,7 @@ function cmd_linear() {
 
 function cmd_linear_submit() {
     let linear_menu = document.getElementById("linear-menu-form");
-    cmd_menu_remove_error(linear_menu);
+    cmd_menu_remove_msg(linear_menu);
     
     let l1_id_input = document.getElementById("linear-menu-l1-id");
     l1_id = parseInt(l1_id_input.value) - 1;
@@ -613,7 +622,94 @@ function cmd_linear_close() {
     gray_overlay(false);
 }
 
-function cmd_calcpmcc() {}
+function cmd_calcpmcc() {
+    gray_overlay(true);
+    let menu = document.getElementById("calcpmcc-menu");
+    menu.style.display = "block"; 
+}
+
+function haircut (a, b) {
+		shorter = Math.min(a.indexOf(""), b.indexOf(""));
+		console.log([a.slice(0,shorter), b.slice(0,shorter)]);
+		return [a.slice(0,shorter), b.slice(0,shorter)];
+}
+
+function sample_pmcc(a, b) {
+
+		if (a.length != b.length) {
+				return null;
+		}
+		
+		let n = a.length;
+		console.log(n);
+		
+		let sum_of_ab = a.map((v, i) => v * b[i]).reduce((s,t) => s + t, 0);
+		let sum_of_a = a.reduce((s,t) => s + t, 0);
+		let sum_of_b = b.reduce((s,t) => s + t, 0);
+		let sum_of_a_squared = a.map((v) => v*v).reduce((s,t) => s + t, 0);
+		let sum_of_b_squared = b.map((v) => v*v).reduce((s,t) => s + t, 0);
+		
+		let numerator = ((n * sum_of_ab) - (sum_of_a * sum_of_b));
+		let denominator_part_a = Math.sqrt((n * sum_of_a_squared) - (sum_of_a * sum_of_a));
+		let denominator_part_b = Math.sqrt((n * sum_of_b_squared) - (sum_of_b * sum_of_b));
+		
+		let pmcc = numerator / (denominator_part_a * denominator_part_b);
+		
+		return pmcc;
+		
+}
+
+function cmd_calcpmcc_submit() {
+		// Using sample correlation coefficient
+		// Lists truncated before the first empty cell in either of them, then PMCC calculated pairwise for length of shortest list
+		// - e.g. PMCC of [1,2,3,"",4,5,6] and [7,8,9,10] is the same as PMCC of [1,2,3] and [7,8,9]
+		let calcpmcc_menu = document.getElementById("calcpmcc-menu-form");
+    cmd_menu_remove_msg(calcpmcc_menu);
+
+    let l1_id_input = document.getElementById("calcpmcc-menu-l1-id");
+    l1_id = parseInt(l1_id_input.value) - 1;
+    
+    let l2_id_input = document.getElementById("calcpmcc-menu-l2-id");
+    l2_id = parseInt(l2_id_input.value) - 1;
+    
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
+
+    let l1;
+    let l2;
+    
+    try {
+        l1 = get_list(l1_id, tab_id);
+        l1 = l1.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
+    } catch (error) {
+        cmd_menu_error(calcpmcc_menu, "Couldn't read list \""+ l1_id_input.value+"\"");
+        return;
+    }
+
+    try {
+        l2 = get_list(l2_id, tab_id);
+        l2 = l2.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
+    } catch (error) {
+        cmd_menu_error(calcpmcc_menu, "Couldn't read list \""+ l2_id_input.value+"\"");
+        return;
+    }
+
+		pmcc = parseFloat(sample_pmcc(...haircut(l1,l2)).toFixed(StatpackSettings.decimal_places));
+
+		if (pmcc === null) {
+				cmd_menu_error(calcpmcc_menu, "Couldn't calculate PMCC.");
+		}
+		
+		cmd_menu_output(calcpmcc_menu, "PMCC is: "+ pmcc);
+    
+    // Don't close automatically because user will want to see result.   
+    
+}
+
+function cmd_calcpmcc_close() {
+    let menu = document.getElementById("calcpmcc-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
 function cmd_testpmcc() {}
 function cmd_normaldist() {}
 function cmd_poissondist() {}

@@ -69,7 +69,22 @@
               <button type="button" id="linear-menu-submit" class="submit" onclick="cmd_linear_submit()">Submit</button>
         </form>
     </div>
-    
+
+    <div id="calcpmcc-menu" style="display: none;">
+      <form id="calcpmcc-menu-form" class="menu-form">
+          <button type="button" id="calcpmcc-menu-close" class="close" onclick="cmd_calcpmcc_close()">X</button>
+          <div id="linear-menu-list1-container" class="menu-input-container">
+              <p>List1</p> <br />
+              <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l1-id">
+          </div>
+          <div id="linear-menu-list2-container" class="menu-input-container">
+              <p>List2</p> <br />
+              <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l2-id">
+          </div>
+              <button type="button" id="calcpmcc-menu-submit" class="submit" onclick="cmd_calcpmcc_submit()">Submit</button>
+        </form>
+    </div>
+
     <div id="root">
       <ul id="menubar">
         <li class="dropdown">
