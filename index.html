@@ -16,7 +16,7 @@
                 <p>First list to be added</p> <br />
                 <input type="text" placeholder="Enter a list number..." id="add-menu-l1-id">
             </div>
-            <div id="add-menu-list1-container" class="menu-input-container">
+            <div id="add-menu-list2-container" class="menu-input-container">
                 <p>Second list to be added</p> <br />
                 <input type="text" placeholder="Enter a list number..." id="add-menu-l2-id">
             </div>
@@ -35,7 +35,7 @@
                 <p>List to apply the log function to</p> <br />
                 <input type="text" placeholder="Enter a list number..." id="log-menu-l1-id">
             </div>
-            <div id="log-menu-list1-container" class="menu-input-container">
+            <div id="log-menu-base-container" class="menu-input-container">
                 <p>Log base</p> <br />
                 <input type="text" placeholder="Enter a number..." id="log-menu-base">
             </div>
@@ -44,6 +44,29 @@
                 <input type="text" placeholder="Enter a list number..." id="log-menu-out-list-id">
             </div>
             <button type="button" id="log-menu-submit" class="submit" onclick="cmd_log_submit()">Submit</button>
+        </form>
+    </div>
+
+    <div id="linear-menu" style="display: none;">
+      <form id="linear-menu-form" class="menu-form">
+          <button type="button" id="linear-menu-close" class="close" onclick="cmd_linear_close()">X</button>
+          <div id="linear-menu-list1-container" class="menu-input-container">
+              <p>List to apply linear transformation to</p> <br />
+              <input type="text" placeholder="Enter a list number..." id="linear-menu-l1-id">
+          </div>
+          <div id="linear-menu-a-container" class="menu-input-container">
+              <p>m (gradient/slope)</p> <br />
+              <input type="text" placeholder="Enter a number..." id="linear-menu-m">
+          </div>
+          <div id="linear-menu-b-container" class="menu-input-container">
+              <p>c (y-intercept)</p> <br />
+              <input type="text" placeholder="Enter a number..." id="linear-menu-c">
+          </div>
+          <div id="linear-menu-out-list-container" class="menu-input-container">
+              <p>Output list</p> <br />
+              <input type="text" placeholder="Enter a list number..." id="linear-menu-out-list-id">
+          </div>
+              <button type="button" id="linear-menu-submit" class="submit" onclick="cmd_linear_submit()">Submit</button>
         </form>
     </div>
     

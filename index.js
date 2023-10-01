@@ -488,18 +488,21 @@ function cmd_add_submit() {
     
     cmd_add_close();    
 }
+
 function cmd_add_close() {
     let menu = document.getElementById("add-menu");
     menu.style.display = "none";
     gray_overlay(false);
 }
+
 function cmd_log() {
     gray_overlay(true);
     let menu = document.getElementById("log-menu");
     menu.style.display = "block"; 
 }
+
 function cmd_log_submit() {
-    let log_menu = document.getElementById("log-menu");
+    let log_menu = document.getElementById("log-menu-form");
     cmd_menu_remove_error(log_menu);
     
     let l1_id_input = document.getElementById("log-menu-l1-id");
@@ -507,6 +510,8 @@ function cmd_log_submit() {
 
     let base_input = document.getElementById("log-menu-base");
     base = parseFloat(base_input.value);
+
+    if (base <= 0) {cmd_menu_error(log_menu, "Negative bases are not allowed"); return;}
 
     let out_list_id_input = document.getElementById("log-menu-out-list-id");
     out_list_id = parseInt(out_list_id_input.value) - 1;
@@ -544,7 +549,67 @@ function cmd_log_close() {
     gray_overlay(false);
 }
 
-function cmd_linear() {}
+function cmd_linear() {
+    gray_overlay(true);
+    let menu = document.getElementById("linear-menu");
+    menu.style.display = "block"; 
+}
+
+function cmd_linear_submit() {
+    let linear_menu = document.getElementById("linear-menu-form");
+    cmd_menu_remove_error(linear_menu);
+    
+    let l1_id_input = document.getElementById("linear-menu-l1-id");
+    l1_id = parseInt(l1_id_input.value) - 1;
+
+    let m_input = document.getElementById("linear-menu-m");
+    m = parseFloat(m_input.value);
+    
+    if (isNaN(m)) {cmd_menu_error(linear_menu, "Gradient must be a number"); return;}
+    
+    let c_input = document.getElementById("linear-menu-c");
+    c = parseFloat(c_input.value);
+    
+    if (isNaN(c)) {cmd_menu_error(linear_menu, "Y-intercept must be a number"); return;}
+
+    let out_list_id_input = document.getElementById("linear-menu-out-list-id");
+    out_list_id = parseInt(out_list_id_input.value) - 1;
+
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
+
+    try {
+        l1 = get_list(l1_id, tab_id);
+        l1 = l1.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
+    } catch (error) {
+        cmd_menu_error(linear_menumenu, "Couldn't read list \""+ l1_id_input.value+"\"");
+        return;
+    }
+
+    let l3 = l1.map(function (x) {
+        if (x === "") {
+            return "";
+        } else {
+            
+            return m*x + c;
+        }
+    });
+
+    try {
+        write_list(l3, out_list_id, tab_id);
+    } catch (error) {
+        cmd_menu_error(linear_menu, "Couldn't write to list \""+ out_list_id_input.value+"\"");
+        return;
+    }
+    cmd_linear_close();
+    
+}
+
+function cmd_linear_close() {
+    let menu = document.getElementById("linear-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
+
 function cmd_calcpmcc() {}
 function cmd_testpmcc() {}
 function cmd_normaldist() {}
