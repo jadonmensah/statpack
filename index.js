@@ -327,11 +327,11 @@ function get_list(list_num, tab_id) {
     let list = []
     let table = document.getElementById("listview-"+tab_id);
     if (table === null) {
-        console.log("tablenull");
+        
         return null;
     }
     if (list_num < 0) {
-        console.log("less than zero");
+        
         return null;
     }
 
@@ -342,7 +342,7 @@ function get_list(list_num, tab_id) {
             
             list.push(parseFloat(row.children[list_num].textContent));
         } else {
-            console.log("getting nonexistent list");
+            
             return null;
         }
     }
@@ -412,10 +412,13 @@ function write_list(list, list_num, tab_id) {
 
 function gray_overlay(on) {
     let overlay = document.getElementById("overlay");
+    let root = document.getElementById("root");
     if (on) {
         overlay.classList.add("overlay-on");
+        root.classList.add("overlayed");
     } else {
         overlay.classList.remove("overlay-on");
+        root.classList.remove("overlayed");
     }
 }
 
@@ -581,7 +584,7 @@ function cmd_linear_submit() {
         l1 = get_list(l1_id, tab_id);
         l1 = l1.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
     } catch (error) {
-        cmd_menu_error(linear_menumenu, "Couldn't read list \""+ l1_id_input.value+"\"");
+        cmd_menu_error(linear_menu, "Couldn't read list \""+ l1_id_input.value+"\"");
         return;
     }
 
@@ -625,6 +628,6 @@ init_listview(current_listview,
 	      StatpackSettings.default_list_name,
 	      0);
 init_palette();
-write_list([5245240],1,0);
+
 
 

@@ -72,9 +72,30 @@
     
     <div id="root">
       <ul id="menubar">
-        <li><button id="file">File</button></li>
-        <li><button id="edit">Edit</button></li>
-        <li><button id="view">View</button></li>
+        <li class="dropdown">
+            <button class="dropdown-button" id="file">File</button>
+            <div class="dropdown-content">
+              <a href="#">Import .csv</a>
+              <a href="#">Export .csv</a>
+            </div>
+        </li>
+        <li class="dropdown">
+          <button class="dropdown-button" id="edit">Edit</button>
+            <div class="dropdown-content">
+              <a href="#">Undo</a>
+              <a href="#">Redo</a>
+              <a href="#">Reset tab</a>
+              <a href="#">Reset everything</a>
+            </div>
+        </li>
+        <li class="dropdown">
+          <button class="dropdown-button" id="info">Info</button>
+            <div class="dropdown-content">
+              <a href="#">About Statpack</a>
+              <a href="#">Known issues</a>
+              <a href="#">Contribute</a>
+            </div>
+        </li>
       </ul>
       <ul id="tab-bar">
           <li class="tab current-tab"><button id="default-tab"></button></li>
