@@ -287,6 +287,7 @@ function suggest(input) {
     let suggestions = sort_by_strdist(tokens[0], keys).reverse().slice(-3).map(gen_suggest_obj);
     //let suggestions = [{name: ("FakeCommand" + StatpackSettings.DEBUG_random_counter++), desc: "This is a fake command for testing purposes."}];
     draw_command_suggestions(suggestions);
+    return suggestions.reverse();
 }
 
 function clear_suggest(input) {
@@ -315,13 +316,16 @@ async function exec_command(cmd) {
     if (tokens[0] in StatpackCommands) {
         StatpackCommands[tokens[0]]();
     } else {
-        // add err to palette input
-        let palette_input = document.getElementsByName("palette-input")[0];
-        palette_input.classList.add("error");
-        // sleep 500ms
-        await sleep(500);
-        // remove err from palette input
-        palette_input.classList.remove("error");
+				// match first result in list (ultrahacky, make this nicer later)
+				eval(`cmd_${suggest(tokens[0])[0].name}()`);
+				// Alt behaviour - error (maybe add as setting?)
+    //     // add err to palette input
+    //     let palette_input = document.getElementsByName("palette-input")[0];
+    //     palette_input.classList.add("error");
+    //     // sleep 500ms
+    //     await sleep(500);
+    //     // remove err from palette input
+    //     palette_input.classList.remove("error");
     }
 }
 
