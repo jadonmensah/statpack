@@ -10,7 +10,7 @@
   <body>
     <div id="overlay"></div>
     <div id="add-menu" style="display: none;">
-        <form id="add-menu-form">
+        <form id="add-menu-form" class="menu-form">
             <button type="button" id="add-menu-close" class="close" onclick="cmd_add_close()">X</button>
             <div id="add-menu-list1-container" class="menu-input-container">
                 <p>First list to be added</p> <br />
@@ -27,6 +27,26 @@
             <button type="button" id="add-menu-submit" class="submit" onclick="cmd_add_submit()">Submit</button>
         </form>
     </div>
+
+    <div id="log-menu" style="display: none;">
+        <form id="log-menu-form" class="menu-form">
+            <button type="button" id="log-menu-close" class="close" onclick="cmd_log_close()">X</button>
+            <div id="log-menu-list1-container" class="menu-input-container">
+                <p>List to apply the log function to</p> <br />
+                <input type="text" placeholder="Enter a list number..." id="log-menu-l1-id">
+            </div>
+            <div id="log-menu-list1-container" class="menu-input-container">
+                <p>Log base</p> <br />
+                <input type="text" placeholder="Enter a number..." id="log-menu-base">
+            </div>
+            <div id="log-menu-out-list-container" class="menu-input-container">
+                <p>Output list</p> <br />
+                <input type="text" placeholder="Enter a list number..." id="log-menu-out-list-id">
+            </div>
+            <button type="button" id="log-menu-submit" class="submit" onclick="cmd_log_submit()">Submit</button>
+        </form>
+    </div>
+    
     <div id="root">
       <ul id="menubar">
         <li><button id="file">File</button></li>

@@ -15,7 +15,7 @@
     --background-colour-elevated: #999999;
 }
 
-#add-menu-form {
+.menu-form {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -44,12 +44,12 @@
     margin: 1rem;
 }
 
-#add-menu-close {
+.close {
     float: right;
     padding: .5rem;
 }
 
-#add-menu-submit {
+.submit {
     float: right;
     padding: .5rem;
 }

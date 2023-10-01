@@ -48,6 +48,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+Math.log = (function() {
+  var log = Math.log;
+  return function(n, base) {
+    return log(n) / (base ? log(base) : 1);
+  };
+})();
+
+
 function init_tabs(default_tab_name) {
     document.getElementById("default-tab").textContent = default_tab_name + " " + ++State.num_tabs;
     
@@ -456,7 +464,7 @@ function cmd_add_submit() {
     
     try {
         l1 = get_list(l1_id, tab_id);
-        l1 = l1.map((a) => a = a || 0);
+        l1 = l1.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
     } catch (error) {
         cmd_menu_error(add_menu, "Couldn't read list \""+ l1_id_input.value+"\"");
         return;
@@ -464,7 +472,7 @@ function cmd_add_submit() {
 
     try {
         l2 = get_list(l2_id, tab_id);
-        l2 = l2.map((a) => a = a || 0)
+        l2 = l2.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
     } catch (error) {
         cmd_menu_error(add_menu, "Couldn't read list \""+ l2_id_input.value+"\"");
         return;
@@ -485,7 +493,57 @@ function cmd_add_close() {
     menu.style.display = "none";
     gray_overlay(false);
 }
-function cmd_log() {}
+function cmd_log() {
+    gray_overlay(true);
+    let menu = document.getElementById("log-menu");
+    menu.style.display = "block"; 
+}
+function cmd_log_submit() {
+    let log_menu = document.getElementById("log-menu");
+    cmd_menu_remove_error(log_menu);
+    
+    let l1_id_input = document.getElementById("log-menu-l1-id");
+    l1_id = parseInt(l1_id_input.value) - 1;
+
+    let base_input = document.getElementById("log-menu-base");
+    base = parseFloat(base_input.value);
+
+    let out_list_id_input = document.getElementById("log-menu-out-list-id");
+    out_list_id = parseInt(out_list_id_input.value) - 1;
+
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
+
+    try {
+        l1 = get_list(l1_id, tab_id);
+        l1 = l1.map(function(a) {let f = (isNaN(a)) ? "" : a; return f});
+    } catch (error) {
+        cmd_menu_error(log_menu, "Couldn't read list \""+ l1_id_input.value+"\"");
+        return;
+    }
+
+    let l3 = l1.map(function (x) {
+        if (x === "") {
+            return "";
+        } else {
+            return Math.log(x) / Math.log(base);
+        }
+    });
+
+    try {
+        write_list(l3, out_list_id, tab_id);
+    } catch (error) {
+        cmd_menu_error(log_menu, "Couldn't write to list \""+ out_list_id_input.value+"\"");
+        return;
+    }
+    cmd_log_close();
+}
+
+function cmd_log_close() {
+    let menu = document.getElementById("log-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
+
 function cmd_linear() {}
 function cmd_calcpmcc() {}
 function cmd_testpmcc() {}
