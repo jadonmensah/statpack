@@ -220,6 +220,7 @@ function draw_command_suggestions(suggestions) {
     for (let i = 0; i < suggestions.length; i++ ) {
 	// add p with strong.command-name for command name and then description
 	let suggestion = document.createElement("p");
+	suggestion.onclick = eval(`cmd_${suggestions[i].name}`);
 	let cmdname = document.createElement("strong");
 	cmdname.classList.add("command-name");
 	cmdname.textContent += suggestions[i].name;

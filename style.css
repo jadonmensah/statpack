@@ -383,6 +383,11 @@ input[name="palette-input"] {
     
 }
 
+#palette-suggestions>p:hover {
+    cursor: pointer;
+    background: var(--background-colour-elevated);
+}
+
 ::placeholder {
     color: var(--text-colour-low-emphasis);
 }
