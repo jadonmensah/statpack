@@ -11,6 +11,7 @@
     <div id="overlay"></div>
     <div id="add-menu" style="display: none;">
         <form id="add-menu-form">
+            <button type="button" id="add-menu-close" class="close" onclick="cmd_add_close()">X</button>
             <div id="add-menu-list1-container" class="menu-input-container">
                 <p>First list to be added</p> <br />
                 <input type="text" placeholder="Enter a list number..." id="add-menu-l1-id">
@@ -24,7 +25,6 @@
                 <input type="text" placeholder="Enter a list number..." id="add-menu-out-list-id">
             </div>
             <button type="button" id="add-menu-submit" class="submit" onclick="cmd_add_submit()">Submit</button>
-            <button type="button" id="add-menu-close" class="close" onclick="cmd_add_close()">X</button>
         </form>
     </div>
     <div id="root">

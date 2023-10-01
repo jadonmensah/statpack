@@ -1,3 +1,4 @@
+
 console.log(`welcome to statpack v0.0.0
 want to help develop & maintain statpack? visit https://github.com/jadonmensah/statpack
 `);
@@ -410,6 +411,24 @@ function gray_overlay(on) {
     }
 }
 
+async function cmd_menu_error(menu, msg) {
+    error_msg = document.createElement("span");
+    error_msg.className = "error-msg";
+    error_msg.textContent = msg;
+    menu.appendChild(error_msg); 
+    menu.classList.add("error");
+    // sleep 500ms
+    await sleep(500);
+    // remove err from palette input
+    menu.classList.remove("error");
+}
+
+function cmd_menu_remove_error(menu) {
+    for (let element of menu.children) {
+        if (element.classList.contains("error-msg")) element.remove();
+    }
+}
+
 function cmd_add() {
     gray_overlay(true);
     let menu = document.getElementById("add-menu");
@@ -417,23 +436,48 @@ function cmd_add() {
 }
 
 function cmd_add_submit() {
+    let add_menu = document.getElementById("add-menu-form");
+    cmd_menu_remove_error(add_menu);
+    
     let l1_id_input = document.getElementById("add-menu-l1-id");
     l1_id = parseInt(l1_id_input.value) - 1;
+    
     let l2_id_input = document.getElementById("add-menu-l2-id");
     l2_id = parseInt(l2_id_input.value) - 1;
+    
     let out_list_id_input = document.getElementById("add-menu-out-list-id");
     out_list_id = parseInt(out_list_id_input.value) - 1;
+    
     tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
+
+    let l1;
+    let l2;
+    let l3;
     
-    let l1 = get_list(l1_id, tab_id);
-    l1 = l1.map((a) => a = a || 0);
-   
-    let l2 = get_list(l2_id, tab_id);
-    l2 = l2.map((a) => a = a || 0);
+    try {
+        l1 = get_list(l1_id, tab_id);
+        l1 = l1.map((a) => a = a || 0);
+    } catch (error) {
+        cmd_menu_error(add_menu, "Couldn't read list \""+ l1_id_input.value+"\"");
+        return;
+    }
+
+    try {
+        l2 = get_list(l2_id, tab_id);
+        l2 = l2.map((a) => a = a || 0)
+    } catch (error) {
+        cmd_menu_error(add_menu, "Couldn't read list \""+ l2_id_input.value+"\"");
+        return;
+    }
     
-    let l3 = l1.map((v, i) => v + l2[i]);
+    try {
+        l3 = l1.map((v, i) => v + l2[i]);
+        write_list(l3, out_list_id, tab_id);
+    } catch (error) {
+        cmd_menu_error(add_menu, "Couldn't write to list \""+ out_list_id_input.value+"\"");
+        return;
+    }
     
-    write_list(l3, out_list_id, tab_id);
     cmd_add_close();    
 }
 function cmd_add_close() {

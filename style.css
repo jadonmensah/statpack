@@ -44,6 +44,15 @@
     margin: 1rem;
 }
 
+#add-menu-close {
+    float: right;
+    padding: .5rem;
+}
+
+#add-menu-submit {
+    float: right;
+    padding: .5rem;
+}
 
 .menu-input-container > input {
     color: var(--text-colour-normal ) !important;  
