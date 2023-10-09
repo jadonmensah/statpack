@@ -8,126 +8,153 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="overlay"></div>
-    <div id="add-menu" style="display: none;">
-        <form id="add-menu-form" class="menu-form">
-            <button type="button" id="add-menu-close" class="close" onclick="cmd_add_close()">X</button>
-            <div id="add-menu-list1-container" class="menu-input-container">
-                <p>First list to be added</p> <br />
-                <input type="text" placeholder="Enter a list number..." id="add-menu-l1-id">
-            </div>
-            <div id="add-menu-list2-container" class="menu-input-container">
-                <p>Second list to be added</p> <br />
-                <input type="text" placeholder="Enter a list number..." id="add-menu-l2-id">
-            </div>
-            <div id="add-menu-out-list-container" class="menu-input-container">
-                <p>Output list</p> <br />
-                <input type="text" placeholder="Enter a list number..." id="add-menu-out-list-id">
-            </div>
-            <button type="button" id="add-menu-submit" class="submit" onclick="cmd_add_submit()">Submit</button>
-        </form>
-    </div>
-
-    <div id="log-menu" style="display: none;">
-        <form id="log-menu-form" class="menu-form">
-            <button type="button" id="log-menu-close" class="close" onclick="cmd_log_close()">X</button>
-            <div id="log-menu-list1-container" class="menu-input-container">
-                <p>List to apply the log function to</p> <br />
-                <input type="text" placeholder="Enter a list number..." id="log-menu-l1-id">
-            </div>
-            <div id="log-menu-base-container" class="menu-input-container">
-                <p>Log base</p> <br />
-                <input type="text" placeholder="Enter a number..." id="log-menu-base">
-            </div>
-            <div id="log-menu-out-list-container" class="menu-input-container">
-                <p>Output list</p> <br />
-                <input type="text" placeholder="Enter a list number..." id="log-menu-out-list-id">
-            </div>
-            <button type="button" id="log-menu-submit" class="submit" onclick="cmd_log_submit()">Submit</button>
-        </form>
-    </div>
-
-    <div id="linear-menu" style="display: none;">
-      <form id="linear-menu-form" class="menu-form">
-          <button type="button" id="linear-menu-close" class="close" onclick="cmd_linear_close()">X</button>
-          <div id="linear-menu-list1-container" class="menu-input-container">
-              <p>List to apply linear transformation to</p> <br />
-              <input type="text" placeholder="Enter a list number..." id="linear-menu-l1-id">
-          </div>
-          <div id="linear-menu-a-container" class="menu-input-container">
-              <p>m (gradient/slope)</p> <br />
-              <input type="text" placeholder="Enter a number..." id="linear-menu-m">
-          </div>
-          <div id="linear-menu-b-container" class="menu-input-container">
-              <p>c (y-intercept)</p> <br />
-              <input type="text" placeholder="Enter a number..." id="linear-menu-c">
-          </div>
-          <div id="linear-menu-out-list-container" class="menu-input-container">
-              <p>Output list</p> <br />
-              <input type="text" placeholder="Enter a list number..." id="linear-menu-out-list-id">
-          </div>
-              <button type="button" id="linear-menu-submit" class="submit" onclick="cmd_linear_submit()">Submit</button>
-        </form>
-    </div>
-
-    <div id="calcpmcc-menu" style="display: none;">
-      <form id="calcpmcc-menu-form" class="menu-form">
-          <button type="button" id="calcpmcc-menu-close" class="close" onclick="cmd_calcpmcc_close()">X</button>
-          <div id="linear-menu-list1-container" class="menu-input-container">
-              <p>List1</p> <br />
-              <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l1-id">
-          </div>
-          <div id="linear-menu-list2-container" class="menu-input-container">
-              <p>List2</p> <br />
-              <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l2-id">
-          </div>
-              <button type="button" id="calcpmcc-menu-submit" class="submit" onclick="cmd_calcpmcc_submit()">Submit</button>
-        </form>
-    </div>
-
-    <div id="root">
-      <ul id="menubar">
-        <li class="dropdown">
-            <button class="dropdown-button" id="file">File</button>
-            <div class="dropdown-content">
-              <a href="#">Import .csv</a>
-              <a href="#">Export .csv</a>
-            </div>
-        </li>
-        <li class="dropdown">
-          <button class="dropdown-button" id="edit">Edit</button>
-            <div class="dropdown-content">
-              <a href="#">Undo</a>
-              <a href="#">Redo</a>
-              <a href="#">Reset tab</a>
-              <a href="#">Reset everything</a>
-            </div>
-        </li>
-        <li class="dropdown">
-          <button class="dropdown-button" id="info">Info</button>
-            <div class="dropdown-content">
-              <a href="#">About Statpack</a>
-              <a href="#">Known issues</a>
-              <a href="#">Contribute</a>
-            </div>
-        </li>
-      </ul>
-      <ul id="tab-bar">
-          <li class="tab current-tab"><button id="default-tab"></button></li>
-          <li id="add-tab-li"><button title="Add a new sheet" id="add-tab" >+</button></li>
-      </ul>
-      <div id="current-listview" ></div>
-      <div id="palette">
-	<div id="palette-suggestions"></div>
-        <form action="">
-	  <input name="palette-input" type="text" placeholder="Enter a command..." value=""/>
-        </form>
-        
-        
+      <div id="overlay"></div>
+      <div id="add-menu" style="display: none;">
+          <form id="add-menu-form" class="menu-form">
+              <button type="button" id="add-menu-close" class="close" onclick="cmd_add_close()">X</button>
+              <div id="add-menu-list1-container" class="menu-input-container">
+                  <p>First list to be added</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="add-menu-l1-id">
+              </div>
+              <div id="add-menu-list2-container" class="menu-input-container">
+                  <p>Second list to be added</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="add-menu-l2-id">
+              </div>
+              <div id="add-menu-out-list-container" class="menu-input-container">
+                  <p>Output list</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="add-menu-out-list-id">
+              </div>
+              <button type="button" id="add-menu-submit" class="submit" onclick="cmd_add_submit()">Submit</button>
+          </form>
       </div>
-      <div id="graphview"></div>
-      
-      <script src="index.js"></script>
-    </div>
+
+      <div id="log-menu" style="display: none;">
+          <form id="log-menu-form" class="menu-form">
+              <button type="button" id="log-menu-close" class="close" onclick="cmd_log_close()">X</button>
+              <div id="log-menu-list1-container" class="menu-input-container">
+                  <p>List to apply the log function to</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="log-menu-l1-id">
+              </div>
+              <div id="log-menu-base-container" class="menu-input-container">
+                  <p>Log base</p> <br />
+                  <input type="text" placeholder="Enter a number..." id="log-menu-base">
+              </div>
+              <div id="log-menu-out-list-container" class="menu-input-container">
+                  <p>Output list</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="log-menu-out-list-id">
+              </div>
+              <button type="button" id="log-menu-submit" class="submit" onclick="cmd_log_submit()">Submit</button>
+          </form>
+      </div>
+
+      <div id="linear-menu" style="display: none;">
+          <form id="linear-menu-form" class="menu-form">
+              <button type="button" id="linear-menu-close" class="close" onclick="cmd_linear_close()">X</button>
+              <div id="linear-menu-list1-container" class="menu-input-container">
+                  <p>List to apply linear transformation to</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="linear-menu-l1-id">
+              </div>
+              <div id="linear-menu-a-container" class="menu-input-container">
+                  <p>m (gradient/slope)</p> <br />
+                  <input type="text" placeholder="Enter a number..." id="linear-menu-m">
+              </div>
+              <div id="linear-menu-b-container" class="menu-input-container">
+                  <p>c (y-intercept)</p> <br />
+                  <input type="text" placeholder="Enter a number..." id="linear-menu-c">
+              </div>
+              <div id="linear-menu-out-list-container" class="menu-input-container">
+                  <p>Output list</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="linear-menu-out-list-id">
+              </div>
+              <button type="button" id="linear-menu-submit" class="submit" onclick="cmd_linear_submit()">Submit</button>
+          </form>
+      </div>
+
+      <div id="calcpmcc-menu" style="display: none;">
+          <form id="calcpmcc-menu-form" class="menu-form">
+              <button type="button" id="calcpmcc-menu-close" class="close" onclick="cmd_calcpmcc_close()">X</button>
+              <div id="linear-menu-list1-container" class="menu-input-container">
+                  <p>List1</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l1-id">
+              </div>
+              <div id="linear-menu-list2-container" class="menu-input-container">
+                  <p>List2</p> <br />
+                  <input type="text" placeholder="Enter a list number..." id="calcpmcc-menu-l2-id">
+              </div>
+              <button type="button" id="calcpmcc-menu-submit" class="submit" onclick="cmd_calcpmcc_submit()">Submit</button>
+          </form>
+      </div>
+
+      <div id="export-csv-menu" style="display: none;">
+          <form id="export-csv-menu-form" class="menu-form">
+              <button type="button" id="export-csv-menu-close" class="close" onclick="hide_export_csv_menu()">X</button>
+              <div id="export-csv-menu-filename-container" class="menu-input-container">
+                  <p>File name</p> <br />
+                  <input type="text" placeholder="Enter a file name..." id="export-csv-menu-filename">
+              </div>
+              <button type="button" id="export-csv-menu-submit" class="submit" onclick="export_csv()">Export</button>
+          </form>
+
+      </div>
+
+      <div id="about-statpack-menu" style="display: none;">
+          <form id="about-statpack-menu-form" class="menu-form">
+              <button type="button" id="about-statpack-menu-close" class="close" onclick="hide_about_statpack_menu()">X</button>
+              <p>Statpack is a statistical calculator aimed at A-Level Maths and Further Maths students.</p>
+              <p>Current version: 0.0.0 (development)</p>
+              <p>Written in HTML, JS, and CSS by Jadon Mensah.</p>
+              <p><a target="_blank" href="https://github.com/jadonmensah/statpack">Contribute</a> on Github if you'd like.</p>
+          </form>
+              </div>
+
+      <div id="root">
+          <ul id="menubar">
+              <li class="dropdown">
+                  <button class="dropdown-button" id="file">File</button>
+                  <div class="dropdown-content">
+                      <div>
+                          <button onclick="file_open_btn()">Import .csv file</button>
+                          <input id="file-input" type='file' style="display: none;" onchange="read_csv_file(event)" />
+                      </div>
+                      <div>
+                          <button onclick="show_export_csv_menu()">Export .csv file</button>
+                      </div>
+
+                  </div>
+              </li>
+              <li class="dropdown">
+                  <button class="dropdown-button" id="edit">Edit</button>
+                  <div class="dropdown-content">
+                      Coming soon...
+                  </div>
+              </li>
+              <li class="dropdown">
+                  <button class="dropdown-button" id="info">Info</button>
+                  <div class="dropdown-content">
+                      <div>
+                          <button onclick="show_about_statpack_menu()">About Statpack</button>
+                      </div>
+                      <a href="#">Known issues</a>
+                      <a target="_blank" href="https://github.com/jadonmensah/statpack">Contribute</a>
+                  </div>
+              </li>
+          </ul>
+          <ul id="tab-bar">
+              <li class="tab current-tab"><button id="default-tab"></button></li>
+              <li id="add-tab-li"><button title="Add a new sheet" id="add-tab">+</button></li>
+          </ul>
+          <div id="current-listview"></div>
+          <div id="palette">
+              <div id="palette-suggestions"></div>
+              <form action="">
+                  <input name="palette-input" type="text" placeholder="Enter a command..." value="" />
+              </form>
+
+
+          </div>
+          <div id="graphview"></div>
+
+          <script src="index.js"></script>
+      </div>
   </body>
 </html>

@@ -23,15 +23,15 @@ const StatpackCommands = {
     "calcpmcc_desc": "Calculate the product-moment correlation coefficient of two lists",
     "testpmcc": cmd_testpmcc,
     "testpmcc_desc": "Test the significance of a PMCC",
-    "normal": cmd_normaldist,
+    "normal": cmd_normal,
     "normal_desc": "TODO add normal_desc",
-    "poisson": cmd_poissondist,
+    "poisson": cmd_poisson,
     "poisson_desc": "TODO add poisson_desc",
-    "binomial": cmd_binomialdist,
+    "binomial": cmd_binomial,
     "binomial_desc": "TODO add binomial_desc",
-    "geometric": cmd_geodist,
+    "geometric": cmd_geometric,
     "geometric_desc": "TODO add geometric_desc",
-    "chisquared": cmd_x2dist,
+    "chisquared": cmd_chisquared,
     "chisquared_desc": "TODO add chisquared_desc"
 }
 
@@ -716,11 +716,11 @@ function cmd_calcpmcc_close() {
     gray_overlay(false);
 }
 function cmd_testpmcc() {}
-function cmd_normaldist() {}
-function cmd_poissondist() {}
-function cmd_binomialdist() {}
-function cmd_geodist() {}
-function cmd_x2dist() {}
+function cmd_normal() {}
+function cmd_poisson() {}
+function cmd_binomial() {}
+function cmd_geometric() {}
+function cmd_chisquared() {}
 
 init_tabs(StatpackSettings.default_tab_name);
 init_listview(current_listview,
@@ -730,5 +730,81 @@ init_listview(current_listview,
 	      0);
 init_palette();
 
+function file_open_btn() {
+    document.getElementById("file-input").click();
+}
+
+function read_csv_file(e) {
+    let file = e.target.files[0];
+    if (!file) return;
+    let f_reader = new FileReader();
+    f_reader.readAsText(file);
+    f_reader.onload = function (e) {
+        parse_and_write_csv(e.target.result);
+    }
+}
+
+function parse_and_write_csv(str) {
+    // Extremely naive CSV parsing, ignores non comma separators
+    let lines = str.split(/[\r\n]+/)
+        .map((e) => e.trim())
+        .filter(Boolean);
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop()); 
+    let idx = 0;
+    for (let line of lines) {
+        let list = line.split(",").map((e) => e.trim());
+        if (!list.length) continue;
+        
+        write_list(list, idx++, tab_id);
+        
+    }
+}
+
+function export_csv() {
+    // Export the currently visible tab to CSV file
+    tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop()); 
+    console.log(tab_id);
+    csv_str = "";
+    
+    for (let i = 0; i < State.num_lists_for_tab[tab_id]; i++) {
+        csv_str += get_list(i, tab_id).map((x) => (isNaN(x)) ? "" : x).join(", ") + "\n";
+    }
+    let csv_blob = new Blob([csv_str], { type: "text/plain" });
+    var filename = document.getElementById("export-csv-menu-filename").value;
+    let download_link = document.createElement("a");
+    download_link.download = filename;
+    download_link.style.display = "none";
+    download_link.href = window
+    download_link.href = window.URL.createObjectURL(csv_blob);
+    download_link.onclick = (e) => document.body.removeChild(e.target);
+    document.body.appendChild(download_link);
+    download_link.click();
+
+    hide_export_csv_menu();
+
+}
+
+function show_export_csv_menu() {
+    gray_overlay(true);
+    let menu = document.getElementById("export-csv-menu");
+    menu.style.display = "block"; 
+}
+
+function hide_export_csv_menu() {
+    let menu = document.getElementById("export-csv-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
+
+function show_about_statpack_menu() {
+    gray_overlay(true);
+    let menu = document.getElementById("about-statpack-menu");
+    menu.style.display = "block"; 
+}
 
 
+function hide_about_statpack_menu() {
+    let menu = document.getElementById("about-statpack-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
