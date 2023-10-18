@@ -97,7 +97,7 @@ clear: right;
     bottom: 0;
     background-color: rgba(0,0,0,0.25); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    // cursor: pointer; /* Add a pointer on hover */
+    
     pointer-events: none; 
 }
 
@@ -207,7 +207,6 @@ table {
 th {
     background: var(--background-colour-elevated);
     
-    height: 1lh;
     min-width: 8rem;
     max-width: 8rem;
     white-space: nowrap;
@@ -236,7 +235,7 @@ td:focus {
 }
 
 td {
-    background: var(--background-colour-low-elevation);;
+    background: var(--background-colour-low-elevation);
     border-radius: .2rem;
     height: 2rem;
     min-width: 8rem;
@@ -260,7 +259,7 @@ ul#menubar {
     background-color: var(--background-colour-low-elevation);
     list-style-type: none;
     margin-top: 0;
-    //height: fit-content;
+
     margin-bottom: 1rem;
     padding: .4rem;
     border-bottom: .2rem solid var(--outline-colour-low-emphasis);
@@ -281,7 +280,7 @@ ul#menubar>li {
 }
 
 #add-tab {
-    //margin-left: 1rem;
+
     width: 4rem;
     
 }
@@ -370,7 +369,7 @@ input[name="palette-input"] {
     font-family: helvetica;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3) inset;
     border-radius: .2rem;
-    // border-bottom: .2rem solid var(--outline-colour-low-emphasis);
+
     width:29rem;
 }
 
@@ -419,4 +418,17 @@ input[name="palette-input"] {
     border-radius: .2rem;
     color: var(--text-colour-normal);
 
+}
+
+.formula-input-number {
+    all: unset;
+    width: 1rem;
+    color: var(--text-colour-normal);
+    background: var(--background-colour-elevated);
+}
+
+.formula-comparison-select {
+    
+    color: var(--text-colour-normal);
+    background: var(--background-colour-elevated);
 }
