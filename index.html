@@ -102,19 +102,19 @@
     <div id="binomial-menu" style="display: none;">
         <form id="binomial-menu-form" class="menu-form">
             <button type="button" id="binomial-menu-close" class="close" onclick="cmd_binomial_close()">X</button>
-            <div class="menu-input-container">
+            <div id="binomial-menu-definition-control" class="menu-input-container formula-input">
                 <math xmlns='http://www.w3.org/1998/Math/MathML'>
                     <mrow>
                         <mi style="display: inline !important;">
-                            X~B(<mn><input type="text" placeholder="n" class="formula-input-number" id="binomial-menu-n" onkeypress="auto_resize(this)"></mn>
-                            ,
-                            <mn><input type="text" placeholder="p" class="formula-input-number" id="binomial-menu-p" onkeypress="auto_resize(this)"></mn>
-                            )
+                            X~B(<mn><input type="text" placeholder="n" class="formula-input-number" id="binomial-menu-n" onkeydown="auto_resize(this)"></mn>
+                            <mn>, &nbsp;</mn>
+                            <mn><input type="text" placeholder="p" class="formula-input-number" id="binomial-menu-p" onkeydown="auto_resize(this)">)</mn>
+                            
                         </mi>
                     </mrow>
                 </math>
             </div>
-            <div id="binomial-menu-list1-container" class="menu-input-container formula-input">
+            <div id="binomial-menu-query-control" class="menu-input-container formula-input">
                 <!-- Custom control to input comparison & value for binomial probability calculation-->
                 <math xmlns='http://www.w3.org/1998/Math/MathML'>
                     <mrow>
@@ -130,13 +130,53 @@
                                     <option value="leq">&#8804;</option>
                                 </select>
                             </mo>
-                            <mi><input type="text" placeholder="k" id="binomial-menu-k" class="formula-input-number" onkeypress="auto_resize(this)"> </mi>
+                            <mi><input type="text" placeholder="k" id="binomial-menu-k" class="formula-input-number" onkeydown="auto_resize(this)"> </mi>
                         </mrow>
                         <mo>)</mo>
                     </mrow>
                 </math>
             </div>
             <button type="button" id="binomial-menu-submit" class="submit" onclick="cmd_binomial_submit()">Submit</button>
+        </form>
+    </div>
+
+    <div id="normal-menu" style="display:none;">
+        <form id="normal-menu-form" class="menu-form">
+            <button type="button" id="normal-menu-close" class="close" onclick="cmd_normal_close()">X</button>
+            <div id="normal-menu-definition-control" class="menu-input-container formula-input">
+                <math xmlns='http://www.w3.org/1998/Math/MathML'>
+                    <mrow>
+                        <mi style="display: inline !important;">
+                            X~N(<mn><input type="text" placeholder="&mu;" class="formula-input-number" id="binomial-menu-n" onkeydown="auto_resize(this)"></mn>
+                            <mn>, &nbsp;</mn>
+                            <mn><input type="text" placeholder="&sigma;&#xB2;" style="width: 2ch" class="formula-input-number" id="binomial-menu-p" onkeydown="auto_resize(this,2)">)</mn>
+                            
+                        </mi>
+                    </mrow>
+                </math>
+            </div>
+
+            <div id="normal-menu-query-control" class="menu-input-container formula-input">
+             <math xmlns='http://www.w3.org/1998/Math/MathML'>
+                    <mrow>
+                        <mi>P</mi>
+                        <mo>&#8289;</mo>
+                        <mo>(</mo>
+                        <mrow>
+                            <mi>X</mi>
+                            <mo>
+                                <select id="normal-menu-comparison" class="formula-comparison-select">
+                                    <option value="geq">&#8805;</option>
+                                    <option value="leq">&#8804;</option>
+                                </select>
+                            </mo>
+                            <mi><input type="text" placeholder="k" id="normal-menu-k" class="formula-input-number" onkeydown="auto_resize(this)"> </mi>
+                        </mrow>
+                        <mo>)</mo>
+                    </mrow>
+                </math>
+            </div>
+            <button type="button" id="normal-menu-submit" class="submit" onclick="cmd_normal_submit()">Submit</button>
         </form>
     </div>
 
@@ -156,8 +196,8 @@
                 <button class="dropdown-button" id="file">File</button>
                 <div class="dropdown-content">
                     <div>
-                        <button type="button" onclick="file_open_btn()">Import .csv file</button>
-                        <input id="file-input" type='file' style="display: none;" onclick="read_csv_file(event)" />
+                        <button type="button" onclick="file_open_btn();">Import .csv file</button>
+                        <input id="file-input" type='file' style="display: none;" onchange="read_csv_file(event)" />
                     </div>
                     <div>
                         <button onclick="show_export_csv_menu()">Export .csv file</button>

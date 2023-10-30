@@ -422,13 +422,18 @@ input[name="palette-input"] {
 
 .formula-input-number {
     all: unset;
-    width: 1rem;
+    width: 1ch;
     color: var(--text-colour-normal);
     background: var(--background-colour-elevated);
+}
+
+.formula-input {
+    padding: .4rem;
 }
 
 .formula-comparison-select {
     
     color: var(--text-colour-normal);
     background: var(--background-colour-elevated);
+    border: none;
 }

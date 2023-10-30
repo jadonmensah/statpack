@@ -28,7 +28,7 @@ const StatpackCommands = {
     "poisson": cmd_poisson,
     "poisson_desc": "TODO add poisson_desc",
     "binomial": cmd_binomial,
-    "binomial_desc": "TODO add binomial_desc",
+    "binomial_desc": "Calculate binomial probabilities",
     "geometric": cmd_geometric,
     "geometric_desc": "TODO add geometric_desc",
     "chisquared": cmd_chisquared,
@@ -55,13 +55,16 @@ Math.log = (function () {
     };
 })();
 
-function auto_resize(event) {
-    console.log(event);
-    event.style.width = ((event.value.length + 1)) + 'ch';
+function auto_resize(event, default_width) {
     if (event.key === "Backspace" || event.key === "Delete") {
-        event.style.width = ((event.value.length - 1)) + 'ch';
+        new_width = ((event.value.length - 1));
+    } else {
+        new_width = ((event.value.length + 1));
     }
-
+    
+    if (new_width < default_width) new_width = default_width;
+    
+    event.style.width = new_width + "ch";
 }
 
 function init_tabs(default_tab_name) {
@@ -240,7 +243,7 @@ function draw_command_suggestions(suggestions) {
         cmdname.textContent += suggestions[i].name;
         suggestion.appendChild(cmdname);
 
-        let cmddesc = document.createTextNode(suggestions[i].desc);
+        let cmddesc = document.createTextNode(" " + suggestions[i].desc);
 
         suggestion.appendChild(cmddesc);
         suggestion.insertBefore(cmdname, cmddesc);
@@ -868,17 +871,29 @@ init_listview(current_listview,
 init_palette();
 
 function file_open_btn() {
+    console.log("file_open_btn");
     document.getElementById("file-input").click();
+    
 }
 
 function read_csv_file(e) {
-    let file = e.target.files[0];
-    if (!file) return;
-    let f_reader = new FileReader();
-    f_reader.readAsText(file);
-    f_reader.onload = function (e) {
-        parse_and_write_csv(e.target.result);
-    }
+    console.log("read_csv_file");
+    const [file] = e.target.files;
+    
+    const f_reader = new FileReader();
+    
+    f_reader.addEventListener(
+        "load",
+        () => {   
+            console.log("finished loading file");
+            parse_and_write_csv(f_reader.result);
+        },
+        false,  
+    );
+
+    if (file)
+        f_reader.readAsText(file);
+        
 }
 
 function parse_and_write_csv(str, f_reader) {
@@ -895,13 +910,13 @@ function parse_and_write_csv(str, f_reader) {
         write_list(list, idx++, tab_id);
 
     }
-    console.log(tab_id);
+    console.log("csv parsed and written");
 }
 
 function export_csv() {
     // Export the currently visible tab to CSV file
     tab_id = parseInt(document.getElementsByClassName("visible-listview")[0].id.split("").pop());
-    console.log(tab_id);
+    
     csv_str = "";
 
     for (let i = 0; i < State.num_lists_for_tab[tab_id]; i++) {
