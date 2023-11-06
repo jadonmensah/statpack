@@ -771,9 +771,59 @@ function cmd_calcpmcc_close() {
 
 function cmd_testpmcc() { }
 
-function cmd_normal() { }
+function cmd_normal() {
+    gray_overlay(true);
+    let menu = document.getElementById("normal-menu");
+    menu.style.display = "block";
+}
+
+function cmd_normal_close() {
+    let menu = document.getElementById("normal-menu");
+    menu.style.display = "none";
+    gray_overlay(false);
+}
+
+
+function erf(x) {
+    // Numerical approximation, adapted from Abramowitz & Stegun Handbook of Mathematical Functions 7.1.26
+    // Maximal error is 1.5e-7
+    // https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf
+    const c = [0.254829592, -0.284496736, 1.421413741, -1.453152027, 1.061405429];
+    const p = 0.3275911;
+    x = Math.abs(x);
+    let t = 1 / (1 + p * x);
+    return 1 - ((((((c[4] * t + c[3]) * t) + c[2]) * t + c[1]) * t) + c[0]) * t * Math.exp(-1 * x * x);
+}
+
+function cmd_normal_submit() {
+    // Agrees with casio FX cg50 to 6 decimal places
+    // TODO test with wolfram alpha & other statistical packages
+    let normal_menu = document.getElementById("normal-menu-form");
+    cmd_menu_remove_msg(normal_menu);
+
+    let mean = parseFloat(document.getElementById("normal-menu-mean").value);
+    let stdev = parseFloat(document.getElementById("normal-menu-stdev").value);
+    let k = parseFloat(document.getElementById("normal-menu-k").value);
+    let cmp = document.getElementById("normal-menu-comparison").value;
+
+    // normal distribution calculation stuff
+    let p = (1 / 2) * (1 + erf((k - mean) / (stdev * Math.sqrt(2))));
+    if (cmp == "geq") p = 1 - p;
+
+    cmd_menu_output(normal_menu, "Probability is: " + p);
+}
 
 function cmd_poisson() { }
+
+function cmd_poisson_submit() {
+    // P (x < k) = gammq(k, x)
+}
+
+function gammq(k, x) {
+    // adapt from https://websites.pmc.ucsc.edu/~fnimmo/eart290c_17/NumericalRecipesinF77.pdf
+    // Page 211
+
+}
 
 function cmd_binomial() {
     gray_overlay(true);
