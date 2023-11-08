@@ -149,7 +149,7 @@
                         <mi style="display: inline !important;">
                             X~N(<mn><input type="text" placeholder="&mu;" class="formula-input-number" id="normal-menu-mean" onkeydown="auto_resize(this)"></mn>
                             <mn>,&nbsp;</mn>
-                            <mn><input type="text" placeholder="&sigma;" style="width: 2ch" class="formula-input-number" id="normal-menu-stdev" onkeydown="auto_resize(this,2)">)</mn>
+                            <mn><input type="text" placeholder="&sigma;" class="formula-input-number" id="normal-menu-stdev" onkeydown="auto_resize(this)">)</mn>
                             
                         </mi>
                     </mrow>
@@ -166,6 +166,7 @@
                             <mi>X</mi>
                             <mo>
                                 <select id="normal-menu-comparison" class="formula-comparison-select">
+                                    <option value="eq">=</option>
                                     <option value="geq">&#8805;</option>
                                     <option value="leq">&#8804;</option>
                                 </select>
@@ -177,6 +178,46 @@
                 </math>
             </div>
             <button type="button" id="normal-menu-submit" class="submit" onclick="cmd_normal_submit()">Submit</button>
+        </form>
+    </div>
+
+    <div id="poisson-menu" style="">
+        <form id="poisson-menu-form" class="menu-form">
+            <button type="button" id="poisson-menu-close" class="close" onclick="cmd_poisson_close()">X</button>
+            <div id="poisson-menu-definition-control" class="menu-input-container formula-input">
+                <math xmlns='http://www.w3.org/1998/Math/MathML'>
+                    <mrow>
+                        <mi style="display: inline !important;">
+                            X~P(<mn><input type="text" placeholder="k" class="formula-input-number" id="poisson-menu-k" onkeydown="auto_resize(this)"></mn>
+                            <mn>,&nbsp;</mn>
+                            <mn><input type="text" placeholder="&lambda;" class="formula-input-number" id="poisson-menu-lambda" onkeydown="auto_resize(this)">)</mn>
+
+                        </mi>
+                    </mrow>
+                </math>
+            </div>
+            <div id="poisson-menu-query-control" class="menu-input-container formula-input">
+                <math xmlns='http://www.w3.org/1998/Math/MathML'>
+                    <mrow>
+                        <mi>P</mi>
+                        <mo>&#8289;</mo>
+                        <mo>(</mo>
+                        <mrow>
+                            <mi>X</mi>
+                            <mo>
+                                <select id="poisson-menu-comparison" class="formula-comparison-select">
+                                    <option value="eq">=</option>
+                                    <option value="geq">&#8805;</option>
+                                    <option value="leq">&#8804;</option>
+                                </select>
+                            </mo>
+                            <mi><input type="text" placeholder="x" id="poisson-menu-x" class="formula-input-number" onkeydown="auto_resize(this)"> </mi>
+                        </mrow>
+                        <mo>)</mo>
+                    </mrow>
+                </math>
+            </div>
+            <button type="button" id="poisson-menu-submit" class="submit" onclick="cmd_poisson_submit()">Submit</button>
         </form>
     </div>
 
