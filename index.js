@@ -820,7 +820,19 @@ function cmd_poisson() {
 }
 
 function cmd_poisson_submit() {
-    // P (x < k) = gammq(k, x)
+    let poisson_menu = document.getElementById("poisson-menu-form");
+    cmd_menu_remove_msg(poisson_menu);
+
+    let lambda = parseFloat(document.getElementById("poisson-menu-lambda").value);
+    let k = parseFloat(document.getElementById("poisson-menu-k").value);
+    let cmp = document.getElementById("normal-menu-comparison").value;
+
+    let p = NaN;
+    if (cmp == "leq") p = gammq(Math.floor(k + 1), lambda);
+    else if (cmp == "geq") p = 1 - gammq(Math.floor(k), lambda);
+    else if (cmp == "eq") p = gammq(Math.floor(k + 1), lambda) - gammq(Math.floor(k), lambda);
+
+    cmd_menu_output(poisson_menu, "Probability is: " + p);
 }
 
 function cmd_poisson_close() {
@@ -830,10 +842,10 @@ function cmd_poisson_close() {
 }
 
 function gammln(x) {
-    let cof = [76.18009172947146, - 86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+    let cof = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
     let y = xx = x;
     let tmp = xx + 5.5;
-    tmp -= (xx * 0.5) * Math.log(tmp);
+    tmp -= (xx + 0.5) * Math.log(tmp);
     let ser = 1.000000000190015;
     for (j = 0; j <= 5; j++) ser += cof[j] / ++y;
     return -tmp + Math.log(2.5066282746310005 * ser / xx);
@@ -885,12 +897,12 @@ function gammcf(k, x) {
 
     return Math.exp(-x + a * Math.log(x) - (gln)) * h;
 }
-function gammq(k, x) {
+function gammq(a, x) {
     // translated from https://github.com/MTMurphy77/UVES_popler/blob/master/gammq.c
     if (x < 0) return null;
     if (a <= 0) return null;
     if (x < (a + 1)) {
-        return 1 - gammser(k, x);
+        return 1 - gammser(a, x);
     }
     else {
         return gammcf(a, x);
