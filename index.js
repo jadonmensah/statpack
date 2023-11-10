@@ -895,7 +895,7 @@ function gammcf(k, x) {
         return null;
     }
 
-    return Math.exp(-x + a * Math.log(x) - (gln)) * h;
+    return Math.exp(-x + k * Math.log(x) - (gln)) * h;
 }
 function gammq(a, x) {
     // translated from https://github.com/MTMurphy77/UVES_popler/blob/master/gammq.c
