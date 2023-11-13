@@ -1,21 +1,9 @@
 // statpack - sp.js | jadon mensah
 // description: loads UI strings, sets up UI event callbacks, contains UI element aliases
 
-import * as util from "./util.js";
-
 import * as controls from "./ui/controls.js";
 import * as list_view from "./ui/list_view.js";
 import * as command from "./ui/command_search.js";
-
-import * as add from "./ui/menus/add.js";
-import * as log from "./ui/menus/log.js";
-import * as linear from "./ui/menus/linear.js";
-import * as calcpmcc from "./ui/menus/calcpmcc.js";
-import * as export_csv from "./ui/menus/export_csv.js";
-import * as binomial from "./ui/menus/binomial.js";
-import * as normal from "./ui/menus/normal.js";
-import * as poisson from "./ui/menus/poisson.js";
-import * as about from "./ui/menus/about.js";
 
 export let ui = {
     // UI elements
@@ -61,6 +49,16 @@ export let ui = {
     row: (n, id) => document.getElementById("row-"+n+"-tab-"+id),
     add_column: (n) => document.getElementById("add-column-"+n),
 };
+
+import * as add from "./ui/menus/add.js";
+import * as log from "./ui/menus/log.js";
+import * as linear from "./ui/menus/linear.js";
+import * as calcpmcc from "./ui/menus/calcpmcc.js";
+import * as export_csv from "./ui/menus/export_csv.js";
+import * as binomial from "./ui/menus/binomial.js";
+import * as normal from "./ui/menus/normal.js";
+import * as poisson from "./ui/menus/poisson.js";
+import * as about from "./ui/menus/about.js";
 
 export const default_settings = {
     // Text for various UI buttons

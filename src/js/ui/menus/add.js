@@ -2,8 +2,6 @@ import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 import * as util from "../../util.js";
 
-const self = sp.ui.add_menu;
-
 export let ui = {
     // UI elements in the menu (nulls replaced with DOM elements once init() is called)
     add_menu_list_1: null,
@@ -21,20 +19,20 @@ export function init() {
     // Defines menu UI
     
     // Standard close/submit buttons
-    if (!menutil.close_submit_button(self, ui, "add-menu-")) return false;
-    
+    if (!menutil.close_submit_button(sp.ui.add_menu, ui)) return false;
+
     settings.event_listeners = [
         [ui.close_button, "click", close],
         [ui.submit_button, "click", submit]
     ];
     // Input for the first list to be added
-    if (!menutil.integer_input(self, ui, "add_menu_list_1", "add-menu-list-1")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_list_1", "add-menu-list-1")) return false;
     
     // Input for the second list to be added
-    if (!menutil.integer_input(self, ui, "add_menu_list_2", "add-menu-list-2")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_list_2", "add-menu-list-2")) return false;
 
     // Input for the list which the result will be output to
-    if (!menutil.integer_input(self, ui, "add_menu_out_list", "add-menu-out-list")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_out_list", "add-menu-out-list")) return false;
 
     settings.input_placeholders = [
         [ui.add_menu_list_1, "First list"],
@@ -43,7 +41,7 @@ export function init() {
     ];
     
     // Custom control - looks like: List1 + List2 -> Output
-    if (!menutil.formula_control(self, ui, ui.add_menu_list_1, "+", ui.add_menu_list_2, "&DoubleRightArrow;", ui.add_menu_out_list)) return false;
+    if (!menutil.formula_control(sp.ui.add_menu, ui, ui.add_menu_list_1, "+", ui.add_menu_list_2, "&DoubleRightArrow;", ui.add_menu_out_list)) return false;
 
     
     // Set input placeholder text
@@ -57,11 +55,11 @@ export function init() {
 }
 
 export function show() {
-    menutil.show_menu(self);
+    menutil.show_menu(sp.ui.add_menu);
 }
 
 export function close() {
-    menutil.close_menu(self);
+    menutil.close_menu(sp.ui.add_menu);
 }
 
 export function submit() {

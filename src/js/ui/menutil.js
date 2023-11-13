@@ -53,7 +53,7 @@ export function write_list(list_id, list) {
     }
 }
 
-export function close_submit_button(menu, ui, id_stem) {
+export function close_submit_button(menu, ui) {
     // Generate close and submit buttons for menu
     let close_button = document.createElement("button");
     close_button.classList.add("close");
@@ -73,31 +73,59 @@ export function close_submit_button(menu, ui, id_stem) {
     return true;
 }
 
-export function integer_input(menu, ui, key, id_stem) {
+export function numeric_input(ui, key) {
     // Generate generic integer input box for menu
     let input = document.createElement("input");
     input.classList.add("menu-numeric-input");
     input.onblur = (event) => {event.target.scrollLeft = 0};
     ui[key] = input;
     return true;
-    
+}
+
+export function dropdown_select(ui, key, opts) {
+    let select = document.createElement("select");
+    select.classList.add("menu-dropdown-select");
+    for (let [value, text] of opts) {
+        let option = document.createElement("option");
+        option.value = value;
+        option.innerHTML = text;
+        select.append(option);
+    }
+    ui[key] = select;
+    return true;
+}
+
+function mathml(element) {
+    return document.createElementNS("http://www.w3.org/1998/Math/MathML", element);
 }
 
 export function formula_control(...params) {
     // Generate formula input control for menu using MathML
     let container = document.createElement("div");
     container.classList.add("menu-control-container");
+
+    let math = mathml("math");
+    let mrow = mathml("mrow");
+    let mi = mathml("mi");
+
     let menu = params[0];
     let ui = params[1];
     for (let param of params.slice(2)) {
         if (typeof param === "string") {
-            let element = document.createElement("mn")
+            let element = mathml("mn")
             element.innerHTML = param;
-            container.append(element);
+            mi.append(element);
         } else {
-            container.append(param);
+            let mn = mathml("mn");
+            mn.append(param)
+            mi.append(mn);
         }
     }
+
+    mi.style.cssText = "display: inline !important";
+    mrow.append(mi);
+    math.append(mrow);
+    container.append(math);
     menu.insertBefore(container, ui.submit_button);
     return true;
 }
