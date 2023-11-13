@@ -1,0 +1,351 @@
+/* statpack - style.css | jadon mensah */
+
+:root {
+    /* Miscellaneous variables */
+    --fill-opacity: 0.4;
+    --default-shadow: 0px 10px 10px rgba(0,0,0,var(--fill-opacity));
+    --inset-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3) inset;
+
+    /* UI colour variables */
+    --text-low: #d1d1d1;
+    --text-mid: #ededed;
+    --text-high: #ffffff;
+    --background-high: #4d4d4d;
+    --background-mid: #2b2b2b;
+    --background-low: #141414;
+    --accent-transparent: rgba(188,23,194, var(--fill-opacity));
+    --accent: #bc17c2;
+    --success-transparent: rgba(40,194,23, var(--fill-opacity));
+    --success: #28c217;
+    --error-transparent: rgba(194,23,57, var(--fill-opacity));
+    --error: #c21739;
+    --info-transparent: rgba(23,185,194, var(--fill-opacity));
+    --info: #17b9c2;
+}
+
+/* Fonts */
+
+@font-face {
+    /* Import a font called Helvetica from the file Helvetica.ttf */
+    font-family: "Helvetica";
+    src: url("../fonts/Helvetica.ttf");
+}
+
+/* Basic styles */
+
+body {
+    /* Set text and background colours */
+    color: var(--text-low);
+    background-color: var(--background-low);
+
+    /* Remove margins/padding */
+    margin: 0;
+    padding: 0;
+
+    /* Set default font and font size */
+    font-family: Helvetica;
+    font-size: 1.5em;
+}
+
+button {
+    /* Remove default button styling */
+    all: unset;
+
+    border-radius: .4rem;
+    /* Remove margins */
+    margin: 0;
+
+    /* Add padding */
+    padding: .6rem;
+
+    /* Set background colour */
+    background: rgba(0,0,0,0);
+
+    /* Change cursor when hovered */
+    cursor: pointer;
+
+    /* Centre text */
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
+}
+
+/* Menubar & Dropdowns */
+
+#menu-bar {
+    overflow: hidden;
+    background-color: var(--background-mid);
+    box-shadow: var(--default-shadow);
+}
+
+.menu-bar-dropdown {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-bar-dropdown-content {
+    display: none;
+    background: var(--background-mid);
+    color: var(--text-mid);
+    position: absolute;
+    z-index: 1;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    border-radius: 0 0 .4rem .4rem;
+    box-shadow: var(--default-shadow);
+    
+}
+
+.menu-bar-dropdown:hover .menu-bar-dropdown-content {
+    display: block;
+}
+
+/* Tab bar */
+
+#tab-bar {
+    background-color: var(--background-mid);
+    margin: .8rem;
+    padding: 0;
+    border-radius: .4rem;
+    box-shadow: var(--default-shadow);
+}
+
+.tab {
+    display: inline;
+    top: 50%;
+    translateY(-50%);
+}
+
+.active-tab {
+    background: var(--accent-transparent);
+}
+
+.tab-button .tab-close-button  {
+    display: inline-block;
+    width: 8rem;
+}
+
+/* Command search */
+
+#command-search {
+    width: 32rem;
+    margin-bottom: .8rem;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.command-search-overlay-fix {
+    display: none; 
+}
+
+#command-search-input {
+    all: unset;
+    width: 100%;
+    padding: .4rem;
+    border-radius: .4rem;
+    color: var(--text-mid);
+    background: var(--background-mid);
+    box-shadow: var(--inset-shadow);
+}
+
+#command-search-suggestions {
+    width:100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    padding: .4rem;
+    border-radius: .4rem;
+    box-shadow: var(--default-shadow);
+    color: var(--text-high);
+    background: var(--background-high);
+}
+
+/* List view */
+
+.table {
+    table-layout: fixed;
+    display: none;
+    overflow-x: auto;
+    border-spacing: .8rem;
+}
+
+th {
+    background: var(--background-high);
+    color: var(--text-high);
+    min-width: 8rem;
+    max-width: 8rem;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: .2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: .4rem;
+}
+
+.th-add-column {
+    cursor: pointer;
+    background: var(--accent-transparent);
+}
+
+td {
+    background: var(--background-mid);
+    border-radius: .2rem;
+    height: 2rem;
+    min-width: 8rem;
+    max-width: 8rem;
+    padding:.2rem;
+    overflow:hidden;
+    white-space: nowrap;
+    box-shadow: var(--inset-shadow);
+    text-overflow:ellipsis;
+}
+
+td:focus {
+    text-overflow: clip;
+}
+
+td:hover {
+    outline: 2px solid var(--accent);
+}
+
+/* UI overlay */
+
+#main {
+    height: 100%;
+    margin:0;
+    padding:0;
+}
+
+#main.overlayed {
+    filter: blur(0.25rem);
+    pointer-events: none;
+
+}
+
+#overlay {
+    /* Grey overlay that covers the screen, toggled ON when menus are opened */
+
+    /* Positioning - cover entire screen */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Hide by default */
+    display: none;
+
+    /* Set overlay color to be transparent and grey */
+    background-color: rgba(0,0,0,var(--fill-opacity)); 
+
+    /* Place above main UI, but below menus */
+    z-index: 2; 
+}
+
+.overlay-on {
+    display: block !important;
+}
+
+/* Menu styling and controls */
+
+.menu {
+    /* UI menus */
+
+    /* Positioning - centre menu on screen */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Hide by default */
+    display: none;
+
+    /* Place above main UI and grey overlay */
+    z-index: 3;
+
+    /* Set text and background colours */
+    color: var(--text-mid);
+    backdrop-filter: blur(1rem);
+    background:rgba(0,0,0,0.6);
+    /* Rounded corners */
+    border-radius: .4rem;
+    border: 4px solid black;
+
+    /* Scroll content if it overflows */
+    overflow: auto;
+
+    /* Set margins */
+    margin-left: auto;
+    margin-right: auto;
+
+    /* Set width to 80% of screen */
+    width: 80%;
+
+    /* */
+}
+
+.menu-control-container {
+    /* Generic menu control block styling */
+
+    /* Force subsequent blocks to be placed below this */
+    clear: right;
+
+    /* Set margin */
+    margin: 2rem;
+
+    /* Set text and background colours */
+    color: var(--text-high);
+    
+    /* Round corners */
+    border-radius: .2rem;
+
+    /* Set size of spaces between blocks */
+    line-height: .5rem;
+}
+
+.menu-numeric-input {
+    all: unset;
+    width: 8rem;
+    margin: .4rem;
+    padding: .4rem;
+    border-radius: .2rem;
+    color: var(--text-mid);
+    background: var(--background-mid);
+    overflow:hidden;
+    white-space: nowrap;
+    box-shadow: var(--inset-shadow);
+    text-overflow:ellipsis;
+}
+
+.close {
+    /* Menu close button */
+
+    /* Place button at the far right of container */
+    float: right;
+    
+    /* Set padding */
+    padding: .5rem;
+}
+
+.submit {
+    /* Menu submit button */
+    
+    /* Place button at the far right of container */
+    float: right;
+
+    /* Set padding */
+    padding: .5rem;
+}
+

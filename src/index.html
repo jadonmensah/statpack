@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Statpack</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+</head>
+
+<body>
+    <!-- Gray overlay toggled when menus are on screen. -->
+    <div id="overlay"></div>
+
+    <!-- Menus (invisible by default) -->
+    <form id="add-menu" class="menu"></form>
+    <form id="log-menu" class="menu"></form>
+    <form id="linear-menu" class="menu"></form>
+    <form id="calcpmcc-menu" class="menu"></form>
+    <form id="export-csv-menu" class="menu"></form>
+    <form id="binomial-menu" class="menu"></form>
+    <form id="normal-menu" class="menu"></form>
+    <form id="poisson-menu" class="menu"></form>
+    <form id="about-menu" class="menu"></form>
+    <div id="main">
+        <!-- Menubar -->
+        <ul id="menu-bar">
+            <li class="menu-bar-dropdown">
+                <button id="menu-bar-button-file" class="menu-bar-button"></button>
+                <div class="menu-bar-dropdown-content">
+                    <div>
+                        <button id="import-csv-button" class="menu-bar-dropdown-button" type="button"></button>
+                        <input id="file-input" type='file' style="display: none;"/>
+                    </div>
+                    <div>
+                        <button id="export-csv-button" class="menu-bar-dropdown-button"></button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="menu-bar-dropdown">
+                <button id="menu-bar-button-edit" class="menu-bar-button"></button>
+                <div class="menu-bar-dropdown-content">Coming soon...</div>
+            </li>
+            
+            <li class="menu-bar-dropdown">
+                <button id="menu-bar-button-info" class="menu-bar-button"></button>
+                <div class="menu-bar-dropdown-content">
+                    <div>
+                        <button id="about-button" class="menu-bar-dropdown-button"></button>
+                    </div>
+                        <a target="_blank" href="https://github.com/jadonmensah/statpack">Contribute!</a>
+                    </div>
+            </li>
+        </ul>
+
+        <!-- Tab bar -->
+        <ul id="tab-bar">
+            <li id="add-tab" class="tab">
+                <button id="add-tab-button" class="tab-button"></button>
+            </li>
+        </ul>
+
+        <!-- List view -->
+        <div id="list-view">
+        </div>
+
+        <!-- Command search -->
+        <div id="command-search">
+            <div id="command-search-suggestions"></div>
+            <form onSubmit="return false;" autocomplete="off">
+                <input id="command-search-input" type="text" value=""/>
+            </form>
+        </div>
+    </div>
+    <!-- JS Files -->
+
+    <script type="module" src="js/ui/menus/add.js"></script>
+    <script type="module" src="js/ui/menus/log.js"></script>
+    <script type="module" src="js/ui/menus/linear.js"></script>
+    <script type="module" src="js/ui/menus/calcpmcc.js"></script>
+    <script type="module" src="js/ui/menus/export_csv.js"></script>
+    <script type="module" src="js/ui/menus/binomial.js"></script>
+    <script type="module" src="js/ui/menus/normal.js"></script>
+    <script type="module" src="js/ui/menus/poisson.js"></script>
+    <script type="module" src="js/ui/menus/about.js"></script>
+    
+    <script type="module" src="js/ui/menutil.js"></script>
+    <script type="module" src="js/ui/controls.js"></script>
+    <script type="module" src="js/statpack.js"></script>
+    <script type="module" src="js/index.js"></script>
+    
+</body>
