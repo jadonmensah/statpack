@@ -1,7 +1,7 @@
 // statpack - index.js | jadon mensah
 // description: main javascript file, calls init_ui once window has loaded
 
-console.log(`welcome to statpack v0.0.0
+console.log(`hello!
 want to help develop & maintain statpack? visit https://github.com/jadonmensah/statpack
 `);
 

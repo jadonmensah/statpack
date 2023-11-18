@@ -26,13 +26,13 @@ export function init() {
         [ui.submit_button, "click", submit]
     ];
     // Input for the first list to be added
-    if (!menutil.numeric_input(ui, "add_menu_list_1", "add-menu-list-1")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_list_1")) return false;
     
     // Input for the second list to be added
-    if (!menutil.numeric_input(ui, "add_menu_list_2", "add-menu-list-2")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_list_2")) return false;
 
     // Input for the list which the result will be output to
-    if (!menutil.numeric_input(ui, "add_menu_out_list", "add-menu-out-list")) return false;
+    if (!menutil.numeric_input(ui, "add_menu_out_list")) return false;
 
     settings.input_placeholders = [
         [ui.add_menu_list_1, "First list"],
@@ -41,7 +41,7 @@ export function init() {
     ];
     
     // Custom control - looks like: List1 + List2 -> Output
-    if (!menutil.formula_control(sp.ui.add_menu, ui, ui.add_menu_list_1, "+", ui.add_menu_list_2, "&DoubleRightArrow;", ui.add_menu_out_list)) return false;
+    if (!menutil.formula_control(sp.ui.add_menu, ui, ui.add_menu_list_1, "&nbsp;+&nbsp;", ui.add_menu_list_2, "&nbsp;&DoubleRightArrow;&nbsp;", ui.add_menu_out_list)) return false;
 
     
     // Set input placeholder text

@@ -22,6 +22,8 @@
     --error: #c21739;
     --info-transparent: rgba(23,185,194, var(--fill-opacity));
     --info: #17b9c2;
+
+    --success-outline: 2px solid var(--success);
 }
 
 /* Fonts */
@@ -30,6 +32,11 @@
     /* Import a font called Helvetica from the file Helvetica.ttf */
     font-family: "Helvetica";
     src: url("../fonts/Helvetica.ttf");
+}
+
+@font-face {
+    font-family: "Reiswar";
+    src: url("../fonts/Reiswar.ttf");
 }
 
 /* Basic styles */
@@ -334,7 +341,7 @@ td:hover {
 .menu-dropdown-select {
     color: var(--text-mid);
     font-size: 1.2rem;
-    background: rgba(0,0,0,0);
+    background: var(--background-mid); 
     border: none;
 }
 
@@ -348,10 +355,42 @@ sub > .menu-numeric-input {
     top: .5rem;
 }
 
+.menu-message {
+    /* Set margin */
+    margin: 2rem;
+
+    /* Set text and background colours */
+    color: var(--text-high);
+    
+    /* Round corners */
+    border-radius: .2rem;
+
+    padding: .4rem;
+    /* Set size of spaces between blocks */
+    line-height: .5rem;
+
+}
+
+.menu-message-success {
+
+    background: var(--success-transparent);
+    outline: var(--success-outline);
+}
+
+.menu-text-block {
+    clear: right;
+    display:block;
+    line-height: .5rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    padding: 1rem;
+}
+
 .close {
     /* Menu close button */
 
     /* Place button at the far right of container */
+    clear: left;
     float: right;
     
     /* Set padding */
@@ -368,3 +407,20 @@ sub > .menu-numeric-input {
     padding: .5rem;
 }
 
+/* Logotype */
+
+.statpack-logotype {
+    clear: right;
+    display: block;
+    margin-left: 4rem;
+    padding: 1rem;
+    font-family: Reiswar;
+    font-size: 3em;
+}
+
+/* No JavaScript banner */
+
+#no-js {
+    padding: .4rem;
+    background: var(--error);
+}

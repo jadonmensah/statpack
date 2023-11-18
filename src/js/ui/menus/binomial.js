@@ -1,5 +1,6 @@
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
+import * as util from "../../util.js";
 
 export let ui = {
     close_button: null,
@@ -42,9 +43,9 @@ export function init() {
         [ui.x, "x"],
     ];
 
-    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "X~B(", ui.num_trials, ", ", ui.prob_success, ")")) return false;
+    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "X~B(", ui.num_trials, "&nbsp;,&nbsp;", ui.prob_success, ")")) return false;
 
-    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "P(X ", ui.comparison, ui.x, ")")) return false;
+    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "P(X&nbsp;", ui.comparison, "&nbsp;" , ui.x, ")")) return false;
 
     // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
@@ -63,6 +64,56 @@ export function close() {
     menutil.close_menu(sp.ui.binomial_menu);
 }
 
-export function submit() {
+const pascals_triangle = [
+    [1],
+    [1, 1],
+    [1, 2, 1],
+    [1, 3, 3, 1],
+    [1, 4, 6, 4, 1],
+    [1, 5, 10, 10, 5, 1],
+    [1, 6, 15, 20, 15, 6, 1],
+    [1, 7, 21, 35, 35, 21, 7, 1],
+    [1, 8, 28, 56, 70, 56, 28, 8, 1],
+
+];
+
+function choose(n, k) {
+    while (n >= pascals_triangle.length) {
+        let length = pascals_triangle.length;
+        let next_row = [];
+        next_row[0] = 1;
+        for (let i = 1, prev = length - 1; i < length; i++) {
+            next_row[i] = pascals_triangle[prev][i - 1] + pascals_triangle[prev][i];
+        }
+        next_row[length] = 1;
+        pascals_triangle.push(next_row);
+    }
+    return pascals_triangle[n][k]
+}
+
+function binomial_cdf(k, n, p) {
+    let cumulative_sum = 0;
     
+    for (let j = 0; j <= k; j++) {
+        let nCj = choose(n, j);
+        cumulative_sum += nCj * (p ** j) * ((1 - p) ** (n - j));
+    }
+    
+    return cumulative_sum;
+}
+
+export function submit() {
+    menutil.clear_messages(sp.ui.binomial_menu);
+    
+    let x = parseInt(ui.x.value);
+    let num_trials = parseInt(ui.num_trials.value);
+    let prob_success = parseFloat(ui.prob_success.value);
+    let comparison = ui.comparison.value;
+
+    let result = binomial_cdf(x, num_trials, prob_success);
+    if (comparison === "eq") result = result - binomial_cdf(x - 1, num_trials, prob_success);
+    if (comparison === "geq") result = 1 - binomial_cdf(x - 1, num_trials, prob_success);
+    result = util.round_decimal(result, sp.default_settings.decimal_places);
+    
+    menutil.success(sp.ui.binomial_menu, result);
 }

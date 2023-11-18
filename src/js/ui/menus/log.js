@@ -41,7 +41,7 @@ export function init() {
     subscript_input.append(ui.log_base);
 
     // Custom control - looks like: Log_base(list_1) => out_list
-    if (!menutil.formula_control(sp.ui.log_menu, ui, "log", subscript_input, "(", ui.list_1, ")" ,"&DoubleRightArrow;", ui.out_list)) return false;
+    if (!menutil.formula_control(sp.ui.log_menu, ui, "log", subscript_input, "(", ui.list_1, ")&nbsp;&DoubleRightArrow;&nbsp;", ui.out_list)) return false;
 
     // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;

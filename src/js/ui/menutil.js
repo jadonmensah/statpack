@@ -20,7 +20,9 @@ export function read_list(list_id) {
             continue;
         }
         if (row.cells.length > list_id) {
-            list.push(parseFloat(row.children[list_id].textContent));
+            let value = parseFloat(row.children[list_id].textContent);
+            if (isNaN(value)) value = undefined;
+            list.push(value);
         } else {
             return null;
         }
@@ -41,20 +43,22 @@ export function write_list(list_id, list) {
         }
 
         if (row.cells.length > list_id) {
-            if (!isNaN(list[counter])) row.children[list_id].textContent = list[counter++];
+            if (!util.is_undefined(list[counter]))
+                row.children[list_id].textContent = list[counter++];
         } else {
 
             while (row.cells.length < (list_id + 1)) {
                 list_view.add_list(parseInt(table.id.split("-").slice(-1)))();
                 
             }
-            if (!isNaN(list[counter])) row.children[list_id].textContent = list[counter++];
+            if (!util.is_undefined(list[counter]))
+                row.children[list_id].textContent = list[counter++];
         }
     }
 }
 
-export function close_submit_button(menu, ui) {
-    // Generate close and submit buttons for menu
+
+export function close_button(menu, ui) {
     let close_button = document.createElement("button");
     close_button.classList.add("close");
     close_button.type = "button";
@@ -62,7 +66,13 @@ export function close_submit_button(menu, ui) {
     ui.close_button = close_button;
     
     menu.append(close_button);
+    return true;
+}
 
+export function close_submit_button(menu, ui) {
+    // Generate close and submit buttons for menu
+    close_button(menu, ui);
+    
     let submit_button = document.createElement("button");
     submit_button.classList.add("submit");
     submit_button.type = "button";
@@ -130,6 +140,11 @@ export function formula_control(...params) {
     return true;
 }
 
+export function num_lists_in_current_tab() {
+    let table = sp.ui.active_table; 
+    return table.rows[1].children.length;
+}
+
 export function show_menu(menu) {
     // Show a menu
     menu.style.display = "block";
@@ -146,4 +161,33 @@ export function close_menu(menu) {
     sp.ui.command_search.classList.remove("command-search-overlay-fix");
     sp.ui.command_search_suggestions.replaceChildren();
     
+}
+
+export function clear_messages(menu) {
+    for (let element of menu.children) {
+        if (element.classList.contains("menu-message")) element.remove();
+    }
+}
+
+export function success(menu, message) {
+    let success = document.createElement("span")
+    success.classList.add("menu-message");
+    success.classList.add("menu-message-success");
+    success.innerHTML = message;
+    menu.insertBefore(success, menu.lastChild);
+}
+
+export function text_block(menu, message) {
+    let span = document.createElement("span");
+    span.classList.add("menu-text-block");
+    span.innerHTML = message;
+    menu.append(span);
+}
+
+export function statpack_logotype(menu) {
+    let text = "Statpack";
+    let span = document.createElement("span");
+    span.classList.add("statpack-logotype");
+    span.textContent = text;
+    menu.append(span);
 }

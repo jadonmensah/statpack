@@ -1,7 +1,7 @@
 // statpack - sp.js | jadon mensah
 // description: loads UI strings, sets up UI event callbacks, contains UI element aliases
 
-import * as controls from "./ui/controls.js";
+import * as file_io from "./ui/file_io.js";
 import * as list_view from "./ui/list_view.js";
 import * as command from "./ui/command_search.js";
 
@@ -79,8 +79,8 @@ export const default_settings = {
 
     // Callbacks for various UI events - [element, event, function]
     event_listeners: [
-        [ui.import_csv_button, "click", controls.import_csv_button],
-        [ui.file_input, "change", controls.read_csv],
+        [ui.import_csv_button, "click", file_io.import_csv],
+        [ui.file_input, "change", file_io.read_csv],
         [ui.export_csv_button, "click", export_csv.show],
         [ui.command_search_input, "change", command.execute_command],
         [ui.command_search_input, "input", command.update_suggestions],
@@ -95,6 +95,8 @@ export const default_settings = {
     list_length: 10,
     suggestions_max_length: 5,
     decimal_places: 4,
+    version: "1.0.0",
+    last_updated: "18 November 2023",
 };
 
 export let state = {
