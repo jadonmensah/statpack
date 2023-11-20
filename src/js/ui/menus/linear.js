@@ -63,18 +63,27 @@ function linear_transform(value, gradient, y_intercept) {
 }
 
 export function submit() {
-    let gradient = parseFloat(ui.gradient.value);
-    let y_intercept = parseFloat(ui.y_intercept.value);
-    let list_to_code = parseInt(ui.list_1.value) - 1;
-    let out_list = parseInt(ui.out_list.value) - 1;
+    menutil.clear_messages(sp.ui.linear_menu);
+
+    let gradient = menutil.read_float(sp.ui.linear_menu, ui.gradient, "Gradient must be a number");
+    if (gradient === null) return;
+    let y_intercept = menutil.read_float(sp.ui.linear_menu, ui.y_intercept, "Y-intercept must be a number");
+    if (y_intercept === null) return;
+    let list_to_code = menutil.read_int(sp.ui.linear_menu, ui.list_1, "Input list ID must be an integer");
+    if (list_to_code === null) return;
+    list_to_code = list_to_code - 1;
+    let out_list = menutil.read_int(sp.ui.linear_menu, ui.out_list, "Output list ID must be an integer");
+    if (out_list === null) return;
+    out_list = out_list - 1;
     
-    let list_1 = menutil.read_list(list_to_code);
+    let list_1 = menutil.read_list(sp.ui.linear_menu, list_to_code);
+    if (!list_1) return;
 
     let coded_list = list_1.map( (v) => {
             return linear_transform(v, gradient, y_intercept);
         }
     );
     
-    menutil.write_list(out_list, coded_list);
+    if (!menutil.write_list(sp.ui.linear_menu, out_list, coded_list)) return;
     close();
 }

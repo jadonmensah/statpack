@@ -75,13 +75,22 @@ function erf(x) {
 
 export function submit() {
     menutil.clear_messages(sp.ui.normal_menu);
+
     // Agrees with casio FX cg50 to 6 decimal places
     // TODO test with wolfram alpha & other statistical packages
 
-    let mean = parseFloat(ui.mean.value);
-    let variance = parseFloat(ui.variance.value);
-    let x = parseFloat(ui.x.value);
+    let mean = menutil.read_float(sp.ui.normal_menu, ui.mean, "Mean of normal distribution must be a number");
+    if (mean === null) return;
+    let variance = menutil.read_float(sp.ui.normal_menu, ui.variance, "Variance of normal distribution must be a number");
+    if (variance === null) return;
+    let x = menutil.read_float(sp.ui.normal_menu, ui.x, "x must be a number");
+    if (x === null) return;
     let comparison = ui.comparison.value;
+
+    if (variance < 0) {
+        menutil.error(sp.ui.normal_menu, "Variance of normal distribution must be greater than zero");
+        return;
+    }
 
     // normal distribution calculation stuff
     let result = (1 / 2) * (1 + erf((x - mean) / (Math.sqrt(variance) * Math.sqrt(2))));

@@ -63,18 +63,33 @@ export function close() {
 }
 
 export function submit() {
-    let first = parseInt(ui.add_menu_list_1.value) - 1;
-    let second = parseInt(ui.add_menu_list_2.value) - 1;
-    let list_id = parseInt(ui.add_menu_out_list.value) - 1;
-    
-    let list_1 = menutil.read_list(first).map((v) => {if (isNaN(v)) return 0; return v;});
-    let list_2 = menutil.read_list(second).map((v) => {if (isNaN(v)) return 0; return v;});
-    
+    menutil.clear_messages(sp.ui.add_menu);
+
+
+    let first = menutil.read_int(sp.ui.add_menu, ui.add_menu_list_1, "First list ID must be an integer");
+    if (first === null) return;
+    first -= 1;
+    let second = menutil.read_int(sp.ui.add_menu, ui.add_menu_list_2, "Second list ID must be an integer");
+    if (second === null) return;
+    second -= 1;
+    let list_id = menutil.read_int(sp.ui.add_menu, ui.add_menu_out_list, "Output list ID must be an integer");
+    if (list_id === null) return;
+    list_id -= 1;
+
+    let list_1 = menutil.read_list(sp.ui.add_menu, first);
+    if (!list_1) return;
+    list_1 = list_1.map((v) => {if (isNaN(v)) return 0; return v;});
+
+    let list_2 = menutil.read_list(sp.ui.add_menu, second);
+    if (!list_2) return;
+    list_2 = list_2.map((v) => {if (isNaN(v)) return 0; return v;});
+
     let sum = list_1.map( (v, i) => {
             return v + list_2[i];
         }
     );
     
-    menutil.write_list(list_id, sum);
+    if (!menutil.write_list(sp.ui.add_menu, list_id, sum)) return;
+
     close();
 }

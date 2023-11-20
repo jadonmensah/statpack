@@ -24,6 +24,7 @@
     --info: #17b9c2;
 
     --success-outline: 2px solid var(--success);
+    --error-outline: 2px solid var(--error);
 }
 
 /* Fonts */
@@ -376,6 +377,12 @@ sub > .menu-numeric-input {
     background: var(--success-transparent);
     outline: var(--success-outline);
 }
+
+.menu-message-error {
+    background: var(--error-transparent);
+    outline: var(--error-outline);
+}
+
 
 .menu-text-block {
     clear: right;

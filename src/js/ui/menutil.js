@@ -5,14 +5,21 @@ import * as sp from "../statpack.js";
 import * as list_view from "./list_view.js"
 import * as util from "../util.js";
 
-export function read_list(list_id) {
+export function read_list(menu, list_id) {
     let list = [];
 
     let table = sp.ui.active_table;   
     
-    if (table === null) return null;
+    if (!table) {
+        error(menu, `Cannot read list ${list_id+1} because no tabs are open.`);
+        return null;
+    }
     
-    if (list_id < 0) return null;
+    if (list_id < 0) {
+        error(menu, `Can't read list ${list_id+1}, did you input the correct list number?`);
+        return null;
+    }
+
     let skipped_heading = false;
     for (let row of table.rows) {
         if (!skipped_heading) {
@@ -24,18 +31,24 @@ export function read_list(list_id) {
             if (isNaN(value)) value = undefined;
             list.push(value);
         } else {
+            error(menu, `Can't read list ${list_id+1}, did you input the correct list number?`);
             return null;
         }
     }
 
-    
     return list;
 }
 
-export function write_list(list_id, list) {
+export function write_list(menu, list_id, list) {
     let table = sp.ui.active_table;
     let skipped_heading = false;
     let counter = 0;
+    
+    if (list_id < 0) {
+        error(menu, `Can't write to list ${list_id+1}, did you input the correct list number?`);
+        return null;
+    }
+
     for (let row of table.rows) {
         if (!skipped_heading) {
             skipped_heading = true;
@@ -55,6 +68,8 @@ export function write_list(list_id, list) {
                 row.children[list_id].textContent = list[counter++];
         }
     }
+
+    return true;
 }
 
 
@@ -177,6 +192,14 @@ export function success(menu, message) {
     menu.insertBefore(success, menu.lastChild);
 }
 
+export function error(menu, message) {
+    let error = document.createElement("span")
+    error.classList.add("menu-message");
+    error.classList.add("menu-message-error");
+    error.innerHTML = message;
+    menu.insertBefore(error, menu.lastChild);
+}
+
 export function text_block(menu, message) {
     let span = document.createElement("span");
     span.classList.add("menu-text-block");
@@ -190,4 +213,22 @@ export function statpack_logotype(menu) {
     span.classList.add("statpack-logotype");
     span.textContent = text;
     menu.append(span);
+}
+
+export function read_int(menu, element, error_msg) {
+    let result = parseInt(element.value);
+    if (isNaN(result)) {
+        error(menu, error_msg);
+        return null;
+    }
+    return result;
+}
+
+export function read_float(menu, element, error_msg) {
+    let result = parseFloat(element.value);
+    if (isNaN(result)) {
+        error(menu, error_msg);
+        return null;
+    }
+    return result;
 }

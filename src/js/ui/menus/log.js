@@ -66,17 +66,30 @@ function log_base(base, num) {
 }
 
 export function submit() {
-    let base = parseFloat(ui.log_base.value);
-    let list_to_log = parseInt(ui.list_1.value) - 1;
-    let out_list = parseInt(ui.out_list.value) - 1;
+    menutil.clear_messages(sp.ui.log_menu);
     
-    let list_1 = menutil.read_list(list_to_log);
+    let base = menutil.read_float(sp.ui.log_menu, ui.log_base, "Logarithm base must be a number");
+    if (base === null) return;
+    let list_to_log = menutil.read_int(sp.ui.log_menu, ui.list_1, "Input list ID must be an integer");
+    if (list_to_log === null) return;
+    list_to_log = list_to_log - 1;
+    let out_list = menutil.read_int(sp.ui.log_menu, ui.out_list);
+    if (out_list === null) return;
+    out_list = out_list - 1;
+
+    if (Math.abs(base) < 1e-5 || Math.abs(base - 1) < 1e-5 || base < 0) {
+        menutil.error(sp.ui.log_menu, "Invalid log base - must be greater than zero and not equal to one");
+        return;
+    }
+
+    let list_1 = menutil.read_list(sp.ui.log_menu, list_to_log);
+    if (!list_1) return;
 
     let log_of_list = list_1.map( (v) => {
             return log_base(base, v);
         }
     );
     
-    menutil.write_list(out_list, log_of_list);
+    if (!menutil.write_list(sp.ui.log_menu, out_list, log_of_list)) return;
     close();
 }

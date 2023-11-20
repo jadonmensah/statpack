@@ -130,9 +130,21 @@ function gammq(a, x) {
 export function submit() {
     menutil.clear_messages(sp.ui.poisson_menu);
 
-    let rate = parseFloat(ui.rate.value);
-    let x = parseFloat(ui.x.value);
+    let rate = menutil.read_float(sp.ui.poisson_menu, ui.rate, "Mean rate of poisson distribution must be a number");
+    if (rate === null) return;
+    let x = menutil.read_int(sp.ui.poisson_menu, ui.x, "x must be an integer");
+    if (x === null) return;
     let comparison = ui.comparison.value;
+
+    if (rate < 0) {
+        menutil.error(sp.ui.poisson_menu, "Mean rate of poisson distribution must be greater than zero");
+        return;
+    }
+
+    if (x < 0) {
+        menutil.error(sp.ui.poisson_menu, "x must be greater than zero");
+        return;
+    }
 
     let result = NaN;
     if (comparison == "leq") result = gammq(Math.floor(x + 1), rate);

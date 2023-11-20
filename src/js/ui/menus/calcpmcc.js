@@ -87,12 +87,26 @@ function sample_pmcc(a, b) {
 export function submit() {
     menutil.clear_messages(sp.ui.calcpmcc_menu);
 
-    let list_1 = menutil.read_list(parseInt(ui.list_1.value) - 1);
-    let list_2 = menutil.read_list(parseInt(ui.list_2.value) - 1);
+    let l1_id = menutil.read_int(sp.ui.calcpmcc_menu, ui.list_1, "First list ID must be an integer");
+    if (l1_id === null) return;
+    l1_id = l1_id - 1;
+    let l2_id = menutil.read_int(sp.ui.calcpmcc_menu, ui.list_2, "Second list ID must be an integer");
+    if (l2_id === null) return;
+    l2_id = l2_id - 1;
+
+    let list_1 = menutil.read_list(sp.ui.calcpmcc_menu, l1_id);
+    if (!list_1) return;
+    let list_2 = menutil.read_list(sp.ui.calcpmcc_menu, l2_id);
+    if (!list_2) return;
 
     let result = util.round_decimal(
                         sample_pmcc(...haircut(list_1, list_2)),
                         sp.default_settings.decimal_places);
     
+
+    if (isNaN(result)) {
+        menutil.error(sp.ui.binomial_menu, "Couldn't calculate PMCC. Have you chosen lists which contain numbers?");
+        return;
+    }
     menutil.success(sp.ui.calcpmcc_menu, result);
 }

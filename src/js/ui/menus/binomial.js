@@ -105,10 +105,28 @@ function binomial_cdf(k, n, p) {
 export function submit() {
     menutil.clear_messages(sp.ui.binomial_menu);
     
-    let x = parseInt(ui.x.value);
-    let num_trials = parseInt(ui.num_trials.value);
-    let prob_success = parseFloat(ui.prob_success.value);
+    let x = menutil.read_int(sp.ui.binomial_menu, ui.x, "x must be an integer");
+    if (x === null) return;
+    let num_trials = menutil.read_int(sp.ui.binomial_menu, ui.num_trials, "Number of trials must be an integer");
+    if (num_trials === null) return;
+    let prob_success = menutil.read_float(sp.ui.binomial_menu, ui.prob_success, "Probability of success must be a number");
+    if (prob_success === null) return;
     let comparison = ui.comparison.value;
+
+    if (x < 0) {
+        menutil.error(sp.ui.binomial_menu, "x must be greater than zero");
+        return;
+    }
+
+    if (num_trials < 0) {
+        menutil.error(sp.ui.binomial_menu, "Number of trials must be greater than zero");
+        return;
+    }
+
+    if ((prob_success < 0) || (prob_success > 1)) {
+        menutil.error(sp.ui.binomial_menu, "Probability of success must be between 0 and 1");
+        return;
+    }
 
     let result = binomial_cdf(x, num_trials, prob_success);
     if (comparison === "eq") result = result - binomial_cdf(x - 1, num_trials, prob_success);

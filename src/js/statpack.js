@@ -96,7 +96,7 @@ export const default_settings = {
     suggestions_max_length: 5,
     decimal_places: 4,
     version: "1.0.0",
-    last_updated: "18 November 2023",
+    last_updated: "20 November 2023",
 };
 
 export let state = {
