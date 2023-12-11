@@ -5,6 +5,18 @@ import * as file_io from "./ui/file_io.js";
 import * as list_view from "./ui/list_view.js";
 import * as command from "./ui/command_search.js";
 
+import * as add from "./ui/menus/add.js";
+import * as log from "./ui/menus/log.js";
+import * as linear from "./ui/menus/linear.js";
+import * as calcpmcc from "./ui/menus/calcpmcc.js";
+import * as export_csv from "./ui/menus/export_csv.js";
+import * as binomial from "./ui/menus/binomial.js";
+import * as normal from "./ui/menus/normal.js";
+import * as poisson from "./ui/menus/poisson.js";
+import * as about from "./ui/menus/about.js";
+import * as geometric from "./ui/menus/geometric.js";
+import * as chisquared from "./ui/menus/chisquared.js";
+
 export let ui = {
     // UI elements
 
@@ -21,6 +33,8 @@ export let ui = {
     normal_menu: document.getElementById("normal-menu"),
     poisson_menu: document.getElementById("poisson-menu"),
     about_menu: document.getElementById("about-menu"),
+    geometric_menu: document.getElementById("geometric-menu"),
+    chisquared_menu: document.getElementById("chisquared-menu"),
 
     // Menubar buttons
     menu_bar_button_file: document.getElementById("menu-bar-button-file"),
@@ -49,16 +63,6 @@ export let ui = {
     row: (n, id) => document.getElementById("row-"+n+"-tab-"+id),
     add_column: (n) => document.getElementById("add-column-"+n),
 };
-
-import * as add from "./ui/menus/add.js";
-import * as log from "./ui/menus/log.js";
-import * as linear from "./ui/menus/linear.js";
-import * as calcpmcc from "./ui/menus/calcpmcc.js";
-import * as export_csv from "./ui/menus/export_csv.js";
-import * as binomial from "./ui/menus/binomial.js";
-import * as normal from "./ui/menus/normal.js";
-import * as poisson from "./ui/menus/poisson.js";
-import * as about from "./ui/menus/about.js";
 
 export const default_settings = {
     // Text for various UI buttons
@@ -111,6 +115,8 @@ export const commands = {
     binomial: ["Calculate probabilities for a binomial distribution.",binomial.show],
     normal: ["Calculate probabilities for a normally distributed random variable.",normal.show],
     poisson: ["Calculate probabilities for a Poisson distribution",poisson.show],
+    geometric: ["Calculate probabilities for a geometric distribution",geometric.show],
+    chisquared: ["Calculate probabilities for a chi-squared distribution",chisquared.show],
 };
 
 export function init_ui() {
@@ -128,7 +134,7 @@ export function init_ui() {
         console.error("sp.init_ui(): init tabs failed");
 
     // Call init routines for each menu
-    for (let menu of [add, log, linear, calcpmcc, export_csv, binomial, normal, poisson, about]) {
+    for (let menu of [add, log, linear, calcpmcc, export_csv, binomial, normal, poisson, about, geometric, chisquared]) {
         if (!menu.init()) console.error("sp.init_ui(): menu init failed");
     }
 }
