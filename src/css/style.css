@@ -1,5 +1,5 @@
-/* statpack - style.css | jadon mensah */
-
+/* Statpack - style.css | Jadon Mensah */
+/* Description: Defines the styling and positioning of HTML elements */
 :root {
     /* Miscellaneous variables */
     --fill-opacity: 0.4;
@@ -23,6 +23,7 @@
     --info-transparent: rgba(23,185,194, var(--fill-opacity));
     --info: #17b9c2;
 
+    /* Outlines */
     --success-outline: 2px solid var(--success);
     --error-outline: 2px solid var(--error);
 }
@@ -30,7 +31,6 @@
 /* Fonts */
 
 @font-face {
-    /* Import a font called Helvetica from the file Helvetica.ttf */
     font-family: "Helvetica";
     src: url("../fonts/Helvetica.ttf");
 }
@@ -43,37 +43,21 @@
 /* Basic styles */
 
 body {
-    /* Set text and background colours */
     color: var(--text-low);
     background-color: var(--background-low);
-
-    /* Remove margins/padding */
     margin: 0;
     padding: 0;
-
-    /* Set default font and font size */
     font-family: Helvetica;
     font-size: 1.5em;
 }
 
 button {
-    /* Remove default button styling */
-    all: unset;
-
+    all: unset; /* Remove default button styling */
     border-radius: .4rem;
-    /* Remove margins */
     margin: 0;
-
-    /* Add padding */
     padding: .6rem;
-
-    /* Set background colour */
     background: rgba(0,0,0,0);
-
-    /* Change cursor when hovered */
-    cursor: pointer;
-
-    /* Centre text */
+    cursor: pointer; /* Change cursor when hovered */
     text-align: center;
 }
 
@@ -131,7 +115,7 @@ a, a:visited, a:hover, a:active {
 .tab {
     display: inline;
     top: 50%;
-    translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .active-tab {
@@ -228,7 +212,7 @@ td:hover {
     outline: 2px solid var(--accent);
 }
 
-/* UI overlay */
+/* Gray overlay + blur background when menu is open */
 
 #main {
     height: 100%;
@@ -243,8 +227,6 @@ td:hover {
 }
 
 #overlay {
-    /* Grey overlay that covers the screen, toggled ON when menus are opened */
-
     /* Positioning - cover entire screen */
     position: fixed;
     width: 100%;
@@ -253,74 +235,41 @@ td:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    /* Hide by default */
-    display: none;
-
-    /* Set overlay color to be transparent and grey */
+    display: none; /* Hidden by default */
     background-color: rgba(0,0,0,var(--fill-opacity)); 
-
-    /* Place above main UI, but below menus */
-    z-index: 2; 
+    z-index: 2; /* Place above main UI, but below menus */ 
 }
 
 .overlay-on {
     display: block !important;
 }
 
-/* Menu styling and controls */
+/* Command menus */
 
 .menu {
-    /* UI menus */
-
     /* Positioning - centre menu on screen */
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-
-    /* Hide by default */
-    display: none;
-
-    /* Place above main UI and grey overlay */
-    z-index: 3;
-
-    /* Set text and background colours */
+    display: none; /* Hidden by default */
+    z-index: 3; /* Place above main UI and grey overlay */
     color: var(--text-mid);
     backdrop-filter: blur(1rem);
     background:rgba(0,0,0,0.6);
-    /* Rounded corners */
     border-radius: .4rem;
     border: var(--black-outline);
-
-    /* Scroll content if it overflows */
     overflow: auto;
-
-    /* Set margins */
     margin-left: auto;
     margin-right: auto;
-
-    /* Set width to 80% of screen */
     width: 80%;
-
-    /* */
 }
 
 .menu-control-container {
-    /* Generic menu control block styling */
-
-    /* Force subsequent blocks to be placed below this */
-    clear: right;
-
-    /* Set margin */
+    clear: right; /* Force subsequent blocks to be placed below this */
     margin: 2rem;
-
-    /* Set text and background colours */
     color: var(--text-high);
-    
-    /* Round corners */
     border-radius: .2rem;
-
-    /* Set size of spaces between blocks */
     line-height: .5rem;
 }
 
@@ -357,23 +306,14 @@ sub > .menu-numeric-input {
 }
 
 .menu-message {
-    /* Set margin */
     margin: 2rem;
-
-    /* Set text and background colours */
     color: var(--text-high);
-    
-    /* Round corners */
     border-radius: .2rem;
-
     padding: .4rem;
-    /* Set size of spaces between blocks */
     line-height: .5rem;
-
 }
 
 .menu-message-success {
-
     background: var(--success-transparent);
     outline: var(--success-outline);
 }
@@ -394,23 +334,13 @@ sub > .menu-numeric-input {
 }
 
 .close {
-    /* Menu close button */
-
-    /* Place button at the far right of container */
     clear: left;
-    float: right;
-    
-    /* Set padding */
+    float: right; /* Place button at the far right of container */
     padding: .5rem;
 }
 
 .submit {
-    /* Menu submit button */
-    
-    /* Place button at the far right of container */
-    float: right;
-
-    /* Set padding */
+    float: right; /* Place button at the far right of container */
     padding: .5rem;
 }
 

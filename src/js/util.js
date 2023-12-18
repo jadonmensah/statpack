@@ -1,14 +1,19 @@
-// statpack - util.js | jadon mensah
-// description: contains useful functions to be used in any module
+// Statpack - util.js | Jadon Mensah
+// Description: Contains useful functions to be used in any module.
 
+// Round a number to a given number of decimal places
 export function round_decimal(num, places) {
     return Math.round((num + Number.EPSILON) * Math.pow(10, places)) / Math.pow(10, places); 
 }
 
+// Return true if a value is undefined or null
 export function is_undefined(x) {
     return x === undefined || isNaN(x);
 }
 
+// gamm* functions translated from http://astronomy.swin.edu.au/~mmurphy/UVES_popler/, which is licensed under the GNU General Public License (version 2)
+
+// Approximation of the mathematical Log Gamma function - see https://mathworld.wolfram.com/LogGammaFunction.html
 function gammln(x) {
     let cof = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
     let xx = x;
@@ -20,6 +25,7 @@ function gammln(x) {
     return -tmp + Math.log(2.5066282746310005 * ser / xx);
 }
 
+// Helper function for gammq() and gammp()
 function gammser(k, x) {
     let gln = gammln(k);
     if (x === 0) {
@@ -41,6 +47,7 @@ function gammser(k, x) {
     }
 }
 
+// Helper function for gammq() and gammp()
 function gammcf(k, x) {
     let gln = gammln(k);
     let del = 0
@@ -67,8 +74,10 @@ function gammcf(k, x) {
 
     return Math.exp(-x + k * Math.log(x) - (gln)) * h;
 }
+
+// Mathematical regularised gamma function Q(a,x)
 export function gammq(a, x) {
-    // translated from https://github.com/MTMurphy77/UVES_popler/blob/master/gammq.c
+
     if (x < 0) return null;
     if (a <= 0) return null;
     if (x < (a + 1)) {
@@ -79,6 +88,7 @@ export function gammq(a, x) {
     }
 }
 
+// Mathematical regularised gamma function P(a,x)
 export function gammp(a,x) {
     return 1 - gammq(a,x);
 }

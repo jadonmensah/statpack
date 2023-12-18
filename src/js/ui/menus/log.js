@@ -1,6 +1,11 @@
+// Statpack - log.js | Jadon Mensah
+// Description: Module for the "log" command menu.
+
+// Import modules
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 
+// Object containing UI elements which need to be polled or updated
 export let ui = {
     close_button: null,
     submit_button: null,
@@ -9,18 +14,13 @@ export let ui = {
     out_list: null,
 }
 
-export let settings = {
+// Object containing settings for the menu
+export let settings = {}
 
-}
-
+// Set up menu elements and event listeners
 export function init() {
     // Standard close/submit buttons
     if (!menutil.close_submit_button(sp.ui.log_menu, ui)) return false;
-
-    settings.event_listeners = [
-        [ui.close_button, "click", close],
-        [ui.submit_button, "click", submit]
-    ];
 
     // Input for the log base
     if (!menutil.numeric_input(ui, "log_base", "log-menu-log-base")) return false;
@@ -31,12 +31,6 @@ export function init() {
     // Input for the list we want to output to
     if (!menutil.numeric_input(ui, "out_list", "log-menu-out-list")) return false;
 
-    settings.input_placeholders = [
-        [ui.list_1, "List"],
-        [ui.log_base, "Base"],
-        [ui.out_list, "Output list"],
-    ];
-    
     let subscript_input = document.createElement("sub");
     subscript_input.append(ui.log_base);
 
@@ -44,9 +38,18 @@ export function init() {
     if (!menutil.formula_control(sp.ui.log_menu, ui, "log", subscript_input, "(", ui.list_1, ")&nbsp;&DoubleRightArrow;&nbsp;", ui.out_list)) return false;
 
     // Set input placeholder text
+    settings.input_placeholders = [
+        [ui.list_1, "List"],
+        [ui.log_base, "Base"],
+        [ui.out_list, "Output list"],
+    ];
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
 
     // Set event listeners
+    settings.event_listeners = [
+        [ui.close_button, "click", close],
+        [ui.submit_button, "click", submit]
+    ];
     for (let [element, event, func] of settings.event_listeners) element.addEventListener(event, func);
 
     return true;
@@ -65,6 +68,7 @@ function log_base(base, num) {
     return (Math.log(num) / Math.log(base));
 }
 
+// Read inputs, check for invalid data and output the coded list as the user wanted.
 export function submit() {
     menutil.clear_messages(sp.ui.log_menu);
     

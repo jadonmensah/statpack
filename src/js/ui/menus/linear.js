@@ -1,6 +1,11 @@
+// Statpack - linear.js | Jadon Mensah
+// Description: Module for the "linear" command menu.
+
+// Import modules
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 
+// Object containing UI elements which need to be polled or updated
 export let ui = {
     close_button: null,
     submit_button: null,
@@ -10,40 +15,36 @@ export let ui = {
     out_list: null,
 }
 
-export let settings = {
+// Object containing settings for the menu
+export let settings = {}
 
-}
-
+// Set up menu elements and event listeners
 export function init() {
     // Standard close/submit buttons
     if (!menutil.close_submit_button(sp.ui.linear_menu, ui)) return false;
 
-    settings.event_listeners = [
-        [ui.close_button, "click", close],
-        [ui.submit_button, "click", submit]
-    ];
-
+    // Create input boxes
     if (!menutil.numeric_input(ui, "gradient")) return false;
-
     if (!menutil.numeric_input(ui, "y_intercept")) return false;
-
     if (!menutil.numeric_input(ui, "list_1")) return false;
-
     if (!menutil.numeric_input(ui, "out_list")) return false;
+    
+    if (!menutil.formula_control(sp.ui.linear_menu, ui, "Code list &nbsp;", ui.list_1, "&nbsp;with:&nbsp;", ui.gradient, "&nbsp;,&nbsp;", ui.y_intercept, "&nbsp;&DoubleRightArrow;&nbsp;", ui.out_list)) return false;
 
+    // Set input placeholder text
     settings.input_placeholders = [
         [ui.list_1, "List"],
         [ui.gradient, "Gradient"],
         [ui.y_intercept, "y-intercept"],
         [ui.out_list, "Output list"],
     ];
-    
-    if (!menutil.formula_control(sp.ui.linear_menu, ui, "Code list &nbsp;", ui.list_1, "&nbsp;with:&nbsp;", ui.gradient, "&nbsp;,&nbsp;", ui.y_intercept, "&nbsp;&DoubleRightArrow;&nbsp;", ui.out_list)) return false;
-
-    // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
 
     // Set event listeners
+    settings.event_listeners = [
+        [ui.close_button, "click", close],
+        [ui.submit_button, "click", submit]
+    ];
     for (let [element, event, func] of settings.event_listeners) element.addEventListener(event, func);
 
     return true;
@@ -58,10 +59,12 @@ export function close() {
     menutil.close_menu(sp.ui.linear_menu);
 }
 
+// y = mx + c
 function linear_transform(value, gradient, y_intercept) {
     return (value * gradient) + y_intercept;
 }
 
+// Read inputs, check for invalid data and output the coded list as the user wanted.
 export function submit() {
     menutil.clear_messages(sp.ui.linear_menu);
 

@@ -1,6 +1,7 @@
-// statpack - sp.js | jadon mensah
-// description: loads UI strings, sets up UI event callbacks, contains UI element aliases
+// Statpack - statpack.js | Jadon Mensah
+// Description: Loads text into UI, sets up UI event callbacks, contains UI element names.
 
+// Import modules from various files
 import * as file_io from "./ui/file_io.js";
 import * as list_view from "./ui/list_view.js";
 import * as command from "./ui/command_search.js";
@@ -17,12 +18,8 @@ import * as about from "./ui/menus/about.js";
 import * as geometric from "./ui/menus/geometric.js";
 import * as chisquared from "./ui/menus/chisquared.js";
 
-export let ui = {
-    // UI elements
-
-    main: document.getElementById("main"),
-    overlay: document.getElementById("overlay"),
-    
+// UI elements
+export let ui = {    
     // Menus
     add_menu: document.getElementById("add-menu"),
     log_menu: document.getElementById("log-menu"),
@@ -41,7 +38,9 @@ export let ui = {
     menu_bar_button_edit: document.getElementById("menu-bar-button-edit"),
     menu_bar_button_info: document.getElementById("menu-bar-button-info"),
 
-    // Miscellaneous controls
+    // Miscellaneous elements
+    main: document.getElementById("main"),
+    overlay: document.getElementById("overlay"),
     import_csv_button: document.getElementById("import-csv-button"),
     file_input: document.getElementById("file-input"),
     export_csv_button: document.getElementById("export-csv-button"),
@@ -62,6 +61,8 @@ export let ui = {
     active_table: null,
     row: (n, id) => document.getElementById("row-"+n+"-tab-"+id),
     add_column: (n) => document.getElementById("add-column-"+n),
+
+    null: document.getElementById("null"),
 };
 
 export const default_settings = {
@@ -100,13 +101,15 @@ export const default_settings = {
     suggestions_max_length: 5,
     decimal_places: 4,
     version: "1.0.0",
-    last_updated: "20 November 2023",
+    last_updated: "11th December 2023",
 };
 
+// Variables containing global state information
 export let state = {
     num_rows_for_tab: [10],
 };
 
+// Command names and descriptions
 export const commands = {
     add: ["Add two lists.", add.show],
     log: ["Take the logarithm of each element in a list.",log.show],
@@ -119,6 +122,7 @@ export const commands = {
     chisquared: ["Calculate probabilities for a chi-squared distribution",chisquared.show],
 };
 
+// UI initiation routine
 export function init_ui() {
     // Add text to basic UI buttons
     for (let [button, text] of default_settings.button_text) button.textContent = text;

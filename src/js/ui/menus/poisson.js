@@ -1,7 +1,12 @@
+// Statpack - poisson.js | Jadon Mensah
+// Description: Module for the "poisson" command menu.
+
+// Import modules
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 import * as util from "../../util.js";
 
+// Object containing UI elements which need to be polled or updated
 export let ui = {
     close_button: null,
     submit_button: null,
@@ -10,53 +15,56 @@ export let ui = {
     x: null,
 }
 
-export let settings = {
-    
-}
+// Object containing settings for the menu
+export let settings = {}
 
+// Set up menu elements and event listeners
 export function init() {
     // Standard close/submit buttons
     if (!menutil.close_submit_button(sp.ui.poisson_menu, ui)) return false;
 
-    settings.event_listeners = [
-        [ui.close_button, "click", close],
-        [ui.submit_button, "click", submit]
-    ];
-
+    // Create an input box for the rate parameter (lambda) of the poisson distribution
     if (!menutil.numeric_input(ui, "rate")) return false;
 
     if (!menutil.dropdown_select(ui,
                                  "comparison",
                                  [["eq", "="], ["geq", "&#8805;"], ["leq", "&#8804;"]])) return false;
 
+    // Create an input box
     if (!menutil.numeric_input(ui, "x")) return false;
 
+    // Create formula controls
+    if (!menutil.formula_control(sp.ui.poisson_menu, ui, "X~Po(", ui.rate, ")")) return false;
+    if (!menutil.formula_control(sp.ui.poisson_menu, ui, "P(X&nbsp;", ui.comparison, "&nbsp;" , ui.x, ")")) return false;
+
+    // Set input placeholder text    
     settings.input_placeholders = [
         [ui.rate, "Mean rate"],
         [ui.x, "x"],
     ];
-
-    if (!menutil.formula_control(sp.ui.poisson_menu, ui, "X~Po(", ui.rate, ")")) return false;
-
-    if (!menutil.formula_control(sp.ui.poisson_menu, ui, "P(X&nbsp;", ui.comparison, "&nbsp;" , ui.x, ")")) return false;
-
-    // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
 
     // Set event listeners
+    settings.event_listeners = [
+        [ui.close_button, "click", close],
+        [ui.submit_button, "click", submit]
+    ];
     for (let [element, event, func] of settings.event_listeners) element.addEventListener(event, func);
 
     return true;
 }
 
+// Show the menu to the user
 export function show() {
     menutil.show_menu(sp.ui.poisson_menu);
 }
 
+// Hide the menu from the user
 export function close() {
     menutil.close_menu(sp.ui.poisson_menu);
 }
 
+// Read inputs, check for invalid data and output the correct probability that the user wanted to calculate
 export function submit() {
     menutil.clear_messages(sp.ui.poisson_menu);
 

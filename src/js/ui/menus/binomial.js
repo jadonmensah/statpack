@@ -1,7 +1,12 @@
+// Statpack - binomial.js | Jadon Mensah
+// Description: Module for the "binomial" command menu.
+
+// Import modules
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 import * as util from "../../util.js";
 
+// Object containing UI elements which need to be polled or updated
 export let ui = {
     close_button: null,
     submit_button: null,
@@ -11,46 +16,36 @@ export let ui = {
     x: null,
 }
 
-export let settings = {
-    
-}
+// Object containing settings for the menu
+export let settings = {}
 
+// Set up menu elements and event listeners
 export function init() {
     // Standard close/submit buttons
     if (!menutil.close_submit_button(sp.ui.binomial_menu, ui)) return false;
 
-    settings.event_listeners = [
-        [ui.close_button, "click", close],
-        [ui.submit_button, "click", submit]
-    ];
-
-    // Input for the log base
     if (!menutil.numeric_input(ui, "num_trials")) return false;
-
-    // Input for the list to apply the log function to
     if (!menutil.numeric_input(ui, "prob_success")) return false;
-
     if (!menutil.dropdown_select(ui,
                                  "comparison",
                                  [["eq", "="], ["geq", "&#8805;"], ["leq", "&#8804;"]])) return false;
-
-    // Input for the list we want to output to
     if (!menutil.numeric_input(ui, "x")) return false;
+    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "X~B(", ui.num_trials, "&nbsp;,&nbsp;", ui.prob_success, ")")) return false;
+    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "P(X&nbsp;", ui.comparison, "&nbsp;" , ui.x, ")")) return false;
 
+    // Set input placeholder text
     settings.input_placeholders = [
         [ui.num_trials, "Trial count"],
         [ui.prob_success, "P(Success)"],
         [ui.x, "x"],
     ];
-
-    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "X~B(", ui.num_trials, "&nbsp;,&nbsp;", ui.prob_success, ")")) return false;
-
-    if (!menutil.formula_control(sp.ui.binomial_menu, ui, "P(X&nbsp;", ui.comparison, "&nbsp;" , ui.x, ")")) return false;
-
-    // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
 
     // Set event listeners
+    settings.event_listeners = [
+        [ui.close_button, "click", close],
+        [ui.submit_button, "click", submit]
+    ];
     for (let [element, event, func] of settings.event_listeners) element.addEventListener(event, func);
 
     return true;
@@ -64,6 +59,7 @@ export function close() {
     menutil.close_menu(sp.ui.binomial_menu);
 }
 
+// Look-up table for Pascal's triangle. If further rows are needed, it is extended on-the-fly by the choose() function
 const pascals_triangle = [
     [1],
     [1, 1],
@@ -77,6 +73,7 @@ const pascals_triangle = [
 
 ];
 
+// Mathematical choose function, n C k
 function choose(n, k) {
     while (n >= pascals_triangle.length) {
         let length = pascals_triangle.length;
@@ -91,6 +88,7 @@ function choose(n, k) {
     return pascals_triangle[n][k]
 }
 
+// Cumulative distribution function for the binomial distribution
 function binomial_cdf(k, n, p) {
     let cumulative_sum = 0;
     
@@ -102,6 +100,7 @@ function binomial_cdf(k, n, p) {
     return cumulative_sum;
 }
 
+// Read inputs, check for invalid data and output the correct probability that the user wanted to calculate
 export function submit() {
     menutil.clear_messages(sp.ui.binomial_menu);
     

@@ -1,49 +1,45 @@
+// Statpack - calcpmcc.js | Jadon Mensah
+// Description: Module for the "calcpmcc" command menu.
+
+// Import modules
 import * as sp from "../../statpack.js";
 import * as menutil from "../menutil.js";
 import * as util from "../../util.js";
 
+// Object containing UI elements which need to be polled or updated
 export let ui = {
-    // UI elements in the menu (nulls replaced with DOM elements once init() is called)
     list_1: null,
     list_2: null,
     close_button: null,
     submit_button: null,
 }
 
-export let settings = {
-    // Input placeholders and event listeners assigned here 
-}
+// Object containing settings for the menu
+export let settings = {}
 
-export function init() {
-    // Defines menu UI
-    
+// Set up menu elements and event listeners
+export function init() {    
     // Standard close/submit buttons
     if (!menutil.close_submit_button(sp.ui.calcpmcc_menu, ui)) return false;
-
-    settings.event_listeners = [
-        [ui.close_button, "click", close],
-        [ui.submit_button, "click", submit]
-    ];
     
     if (!menutil.numeric_input(ui, "list_1")) return false;
-    
     if (!menutil.numeric_input(ui, "list_2")) return false;
-
+    if (!menutil.formula_control(sp.ui.calcpmcc_menu, ui, "&#961; (", ui.list_1, "&nbsp;,&nbsp;", ui.list_2, ")")) return false;
+    
+    // Set input placeholder text
     settings.input_placeholders = [
         [ui.list_1, "First list"],
         [ui.list_2, "Second list"],
     ];
-    
-    if (!menutil.formula_control(sp.ui.calcpmcc_menu, ui, "&#961; (", ui.list_1, "&nbsp;,&nbsp;", ui.list_2, ")")) return false;
-
-    
-    // Set input placeholder text
     for (let [input, placeholder] of settings.input_placeholders) input.placeholder = placeholder;
 
     // Set event listeners
+    settings.event_listeners = [
+        [ui.close_button, "click", close],
+        [ui.submit_button, "click", submit]
+    ];
     for (let [element, event, func] of settings.event_listeners) element.addEventListener(event, func);
 
-   
     return true;
 }
 
@@ -55,19 +51,19 @@ export function close() {
     menutil.close_menu(sp.ui.calcpmcc_menu);
 }
 
+// Given two lists, truncate the longer one so that they are both the same length
 function haircut(a, b) {
     let shorter = Math.min(a.findIndex(util.is_undefined), b.findIndex(util.is_undefined));
     return [a.slice(0, shorter), b.slice(0, shorter)];
 }
 
+// Calculate the sample PMCC for bivariate data (a,b)
 function sample_pmcc(a, b) {
-
     if (a.length != b.length) {
         return null;
     }
 
     let n = a.length;
-    
     let sum_of_ab = a.map((v, i) => v * b[i]).reduce((s, t) => s + t, 0);
     let sum_of_a = a.reduce((s, t) => s + t, 0);
     let sum_of_b = b.reduce((s, t) => s + t, 0);
@@ -81,9 +77,9 @@ function sample_pmcc(a, b) {
     let pmcc = numerator / (denominator_part_a * denominator_part_b);
 
     return pmcc;
-
 }
 
+// Read inputs, check for invalid data and output the correct PMCC
 export function submit() {
     menutil.clear_messages(sp.ui.calcpmcc_menu);
 
