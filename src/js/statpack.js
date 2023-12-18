@@ -101,7 +101,7 @@ export const default_settings = {
     suggestions_max_length: 5,
     decimal_places: 4,
     version: "1.0.0",
-    last_updated: "11th December 2023",
+    last_updated: "18th December 2023",
 };
 
 // Variables containing global state information
