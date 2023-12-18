@@ -74,7 +74,7 @@ const pascals_triangle = [
 ];
 
 // Mathematical choose function, n C k
-function choose(n, k) {
+export function choose(n, k) {
     while (n >= pascals_triangle.length) {
         let length = pascals_triangle.length;
         let next_row = [];
@@ -85,11 +85,17 @@ function choose(n, k) {
         next_row[length] = 1;
         pascals_triangle.push(next_row);
     }
-    return pascals_triangle[n][k]
+    try {
+        return pascals_triangle[n][k];
+    } catch {
+        return null;
+    }
+
+    return pascals_triangle[n][k]; 
 }
 
 // Cumulative distribution function for the binomial distribution
-function binomial_cdf(k, n, p) {
+export function binomial_cdf(k, n, p) { 
     let cumulative_sum = 0;
     
     for (let j = 0; j <= k; j++) {

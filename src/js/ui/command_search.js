@@ -5,7 +5,7 @@
 import * as sp from "../statpack.js";
 
 // Sort list of words by truncated Hamming distance from initial word
-function sort_by_string_distance(initial_word, words_to_sort) {
+export function sort_by_string_distance(initial_word, words_to_sort) {
     let word_distances = words_to_sort.map(word => ({
         word: word,
         distance: string_distance(word, initial_word)
@@ -15,7 +15,7 @@ function sort_by_string_distance(initial_word, words_to_sort) {
 }
 
 // Calculate truncated Hamming distance between strings a and b
-function string_distance(a, b) {
+export function string_distance(a, b) {
     if (a.length > b.length) a = a.slice(0, b.length);
     if (a.length < b.length) b = b.slice(0, a.length);
     let count = 0;

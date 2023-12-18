@@ -52,13 +52,13 @@ export function close() {
 }
 
 // Given two lists, truncate the longer one so that they are both the same length
-function haircut(a, b) {
+export function haircut(a, b) {
     let shorter = Math.min(a.findIndex(util.is_undefined), b.findIndex(util.is_undefined));
     return [a.slice(0, shorter), b.slice(0, shorter)];
 }
 
 // Calculate the sample PMCC for bivariate data (a,b)
-function sample_pmcc(a, b) {
+export function sample_pmcc(a, b) {
     if (a.length != b.length) {
         return null;
     }

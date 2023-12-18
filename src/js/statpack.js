@@ -18,6 +18,8 @@ import * as about from "./ui/menus/about.js";
 import * as geometric from "./ui/menus/geometric.js";
 import * as chisquared from "./ui/menus/chisquared.js";
 
+import * as unittest from "./unittest.js";
+
 // UI elements
 export let ui = {    
     // Menus
@@ -101,7 +103,7 @@ export const default_settings = {
     suggestions_max_length: 5,
     decimal_places: 4,
     version: "1.0.0",
-    last_updated: "18th December 2023",
+    last_updated: "11th December 2023",
 };
 
 // Variables containing global state information
@@ -136,6 +138,9 @@ export function init_ui() {
     // Set up tabs/list view
     if (!list_view.add_tab())
         console.error("sp.init_ui(): init tabs failed");
+
+    // Run unit tests
+    if (!unittest.run_tests()) return false;
 
     // Call init routines for each menu
     for (let menu of [add, log, linear, calcpmcc, export_csv, binomial, normal, poisson, about, geometric, chisquared]) {

@@ -61,7 +61,7 @@ export function close() {
 }
 
 // Cumulative distribution function for the geometric distribution (support 1,2,3...)
-function geometric_cdf(x, p) {
+export function geometric_cdf(x, p) {
     if (x >= 1) return 1 - Math.pow((1-p), Math.floor(x));
     return 0;
 }

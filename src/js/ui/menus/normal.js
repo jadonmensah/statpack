@@ -69,7 +69,7 @@ export function close() {
 // Numerical approximation for the mathematical error function, Erf
 // Adapted from Abramowitz & Stegun Handbook of Mathematical Functions 7.1.26
 // https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf
-function erf(x) {    
+export function erf(x) {    
     const c = [0.254829592, -0.284496736, 1.421413741, -1.453152027, 1.061405429];
     const p = 0.3275911;
     x = Math.abs(x);

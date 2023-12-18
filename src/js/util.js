@@ -14,7 +14,7 @@ export function is_undefined(x) {
 // gamm* functions translated from http://astronomy.swin.edu.au/~mmurphy/UVES_popler/, which is licensed under the GNU General Public License (version 2)
 
 // Approximation of the mathematical Log Gamma function - see https://mathworld.wolfram.com/LogGammaFunction.html
-function gammln(x) {
+export function gammln(x) {
     let cof = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
     let xx = x;
     let y = xx;

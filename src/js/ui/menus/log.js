@@ -64,7 +64,7 @@ export function close() {
     menutil.close_menu(sp.ui.log_menu);
 }
 
-function log_base(base, num) {
+export function log_base(base, num) {
     return (Math.log(num) / Math.log(base));
 }
 

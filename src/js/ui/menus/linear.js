@@ -60,7 +60,7 @@ export function close() {
 }
 
 // y = mx + c
-function linear_transform(value, gradient, y_intercept) {
+export function linear_transform(value, gradient, y_intercept) {
     return (value * gradient) + y_intercept;
 }
 
