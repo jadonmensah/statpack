@@ -12,7 +12,7 @@ Statistical calculator and spreadsheet web app, with functionality covering most
 
 - **Remote**: using your web server of choice, set web root directory to src/, optionally excluding `serv.py`.
 
-# Changes and enhancements
+# Future changes and enhancements
 - Allow user to add more rows to a sheet
 - More unit tests
 - Add more probability distributions & descriptive stats
