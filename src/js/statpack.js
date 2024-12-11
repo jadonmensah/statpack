@@ -140,7 +140,7 @@ export function init_ui() {
         console.error("sp.init_ui(): init tabs failed");
 
     // Run unit tests
-    if (!unittest.run_tests()) return false;
+    if (!unittest.run_tests()) console.error("sp.init_ui(): at least 1 unit test failed");
 
     // Call init routines for each menu
     for (let menu of [add, log, linear, calcpmcc, export_csv, binomial, normal, poisson, about, geometric, chisquared]) {

@@ -68,5 +68,6 @@ export function run_tests() {
             console.log(`test failed: ${last_fail}`);
             return false;
         }
+        return true;
     }
 }
